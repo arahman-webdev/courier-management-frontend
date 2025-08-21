@@ -88,19 +88,59 @@ const AboutSection = () => {
                 </div>
             </div>
             <div className="pt-28">
+                {/* Thin top line */}
+                <div className="bg-primary w-full h-[1px]" />
+
+                {/* Background Section */}
                 <div
-                    style={{ background: `url(${bg})` }}
-                    className="border-t border-primary bg-red-600 "
+                    style={{ backgroundImage: `url(${bg})` }}
+                    className="border-t border-primary bg-cover bg-center"
                 >
-                    <div className="grid grid-cols-4">
-                        <div>
-                            <span className="text-primary">3000+</span>
-                            <h2 className="text-">PROJECT COMPLETE</h2>
-                            <p>Conveniently impact front-end niches via maintainable.</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 p-8 lg:p-16">
+
+                        {/* Stat Item */}
+                        <div className="flex flex-col items-center text-center relative">
+                            <span className="text-primary text-4xl sm:text-5xl font-extrabold">3000+</span>
+                            <h2 className="text-lg sm:text-xl font-semibold mt-2">PROJECT COMPLETE</h2>
+                            <p className="text-gray-600 text-sm sm:text-base mt-2">
+                                Conveniently impact front-end niches via maintainable.
+                            </p>
+                            {/* Divider for large screens only */}
+                            <div className="hidden lg:block absolute top-0 right-0 h-full w-px bg-primary"></div>
+                        </div>
+
+                        {/* Stat Item */}
+                        <div className="flex flex-col items-center text-center relative">
+                            <span className="text-primary text-4xl sm:text-5xl font-extrabold">700+</span>
+                            <h2 className="text-lg sm:text-xl font-semibold mt-2">BEST EMPLOYEES</h2>
+                            <p className="text-gray-600 text-sm sm:text-base mt-2">
+                                Conveniently impact front-end niches via maintainable.
+                            </p>
+                            <div className="hidden lg:block absolute top-0 right-0 h-full w-px bg-primary"></div>
+                        </div>
+
+                        {/* Stat Item */}
+                        <div className="flex flex-col items-center text-center relative">
+                            <span className="text-primary text-4xl sm:text-5xl font-extrabold">350+</span>
+                            <h2 className="text-lg sm:text-xl font-semibold mt-2">WORLD AWARDS</h2>
+                            <p className="text-gray-600 text-sm sm:text-base mt-2">
+                                Conveniently impact front-end niches via maintainable.
+                            </p>
+                            <div className="hidden lg:block absolute top-0 right-0 h-full w-px bg-primary"></div>
+                        </div>
+
+                        {/* Stat Item */}
+                        <div className="flex flex-col items-center text-center">
+                            <span className="text-primary text-4xl sm:text-5xl font-extrabold">1500+</span>
+                            <h2 className="text-lg sm:text-xl font-semibold mt-2">HAPPY CLIENTS</h2>
+                            <p className="text-gray-600 text-sm sm:text-base mt-2">
+                                Conveniently impact front-end niches via maintainable.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     );
 };
