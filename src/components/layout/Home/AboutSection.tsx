@@ -2,7 +2,11 @@ import about from "../../../assets/images/about-1.png"
 import about2 from "../../../assets/images/about-2.png"
 import shape from "../../../assets/images/shape-3.png"
 import shape2 from "../../../assets/images/shape-2.png"
+import bg from "../../../assets/images/bg.png"
 import SectionTitle from "./SectionTile";
+import { CheckCheck } from "lucide-react"
+import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button"
 
 const AboutSection = () => {
     return (
@@ -56,13 +60,44 @@ const AboutSection = () => {
                         </p>
                     </div>
                     <div className="flex flex-col gap-3 py-3">
-                        <div>
-                            
+                        <div className="flex gap-2">
+                            <CheckCheck className="bg-primary rounded-full" />
                             <span>Unlimited Revisions</span>
                         </div>
-                        <span>Unlimited Revisions</span>
-                        <span>Unlimited Revisions</span>
-                        <span>Unlimited Revisions</span>
+                        <div className="flex gap-2">
+                            <CheckCheck className="bg-primary rounded-full" />
+                            <span>Best Fitness Excercise</span>
+                        </div>
+                        <div className="flex gap-2">
+                            <CheckCheck className="bg-primary rounded-full" />
+                            <span>Combine Fitness and</span>
+                        </div>
+                        <div className="flex gap-2">
+                            <CheckCheck className="bg-primary rounded-full" />
+                            <span>Best Solutions</span>
+                        </div>
+                    </div>
+                    <div>
+                        <Separator />
+                    </div>
+                    <div className="pt-10 w-full">
+                        <Button className="rounded-none px-8 py-7 w-full">
+                            ABOUT MORE
+                        </Button>
+                    </div>
+                </div>
+            </div>
+            <div className="pt-28">
+                <div
+                    style={{ background: `url(${bg})` }}
+                    className="border-t border-primary bg-red-600 "
+                >
+                    <div className="grid grid-cols-4">
+                        <div>
+                            <span className="text-primary">3000+</span>
+                            <h2 className="text-">PROJECT COMPLETE</h2>
+                            <p>Conveniently impact front-end niches via maintainable.</p>
+                        </div>
                     </div>
                 </div>
             </div>
