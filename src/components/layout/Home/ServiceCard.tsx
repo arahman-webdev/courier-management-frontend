@@ -24,7 +24,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   return (
     <div className="">
 
-      <div className="relative group rounded-xl overflow-hidden shadow-md transition-all duration-500 bg-white border-b-4 border-primary">
+      <div className="relative group  overflow-hidden shadow-md transition-all duration-500 bg-white border-b-4 border-primary">
         {/* Background Image (hover effect) */}
         <div
           className="absolute inset-0 bg-cover bg-center transform scale-105 opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
