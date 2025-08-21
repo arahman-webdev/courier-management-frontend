@@ -89,7 +89,7 @@ const AboutSection = () => {
             </div>
             <div className="pt-28">
                 {/* Thin top line */}
-                <div className="bg-primary w-full h-[1px]" />
+                <div className="bg-primary w-full h-1" />
 
                 {/* Background Section */}
                 <div
@@ -101,20 +101,21 @@ const AboutSection = () => {
                         {/* Stat Item */}
                         <div className="flex flex-col items-center text-center relative">
                             <span className="text-primary text-4xl sm:text-5xl font-extrabold">3000+</span>
-                            <h2 className="text-lg sm:text-xl font-semibold mt-2">PROJECT COMPLETE</h2>
-                            <p className="text-gray-600 text-sm sm:text-base mt-2">
-                                Conveniently impact front-end niches via maintainable.
+                            <h2 className="text-lg sm:text-xl font-semibold mt-2 text-white">PROJECT COMPLETE</h2>
+                            <p className="text-gray-600 text-sm sm:text-base mt-2 max-w-xs">
+                                Successfully delivered thousands of projects across multiple industries,
+                                ensuring high-quality and timely execution.
                             </p>
-                            {/* Divider for large screens only */}
                             <div className="hidden lg:block absolute top-0 right-0 h-full w-px bg-primary"></div>
                         </div>
 
                         {/* Stat Item */}
                         <div className="flex flex-col items-center text-center relative">
                             <span className="text-primary text-4xl sm:text-5xl font-extrabold">700+</span>
-                            <h2 className="text-lg sm:text-xl font-semibold mt-2">BEST EMPLOYEES</h2>
-                            <p className="text-gray-600 text-sm sm:text-base mt-2">
-                                Conveniently impact front-end niches via maintainable.
+                            <h2 className="text-lg sm:text-xl font-semibold mt-2 text-white">BEST EMPLOYEES</h2>
+                            <p className="text-gray-600 text-sm sm:text-base mt-2 max-w-xs">
+                                A dedicated team of skilled professionals committed to driving
+                                innovation and delivering excellence every day.
                             </p>
                             <div className="hidden lg:block absolute top-0 right-0 h-full w-px bg-primary"></div>
                         </div>
@@ -122,9 +123,10 @@ const AboutSection = () => {
                         {/* Stat Item */}
                         <div className="flex flex-col items-center text-center relative">
                             <span className="text-primary text-4xl sm:text-5xl font-extrabold">350+</span>
-                            <h2 className="text-lg sm:text-xl font-semibold mt-2">WORLD AWARDS</h2>
-                            <p className="text-gray-600 text-sm sm:text-base mt-2">
-                                Conveniently impact front-end niches via maintainable.
+                            <h2 className="text-lg sm:text-xl font-semibold mt-2 text-white">WORLD AWARDS</h2>
+                            <p className="text-gray-600 text-sm sm:text-base mt-2 max-w-xs">
+                                Recognized globally with awards for outstanding performance,
+                                innovation, and consistent customer satisfaction.
                             </p>
                             <div className="hidden lg:block absolute top-0 right-0 h-full w-px bg-primary"></div>
                         </div>
@@ -132,14 +134,16 @@ const AboutSection = () => {
                         {/* Stat Item */}
                         <div className="flex flex-col items-center text-center">
                             <span className="text-primary text-4xl sm:text-5xl font-extrabold">1500+</span>
-                            <h2 className="text-lg sm:text-xl font-semibold mt-2">HAPPY CLIENTS</h2>
-                            <p className="text-gray-600 text-sm sm:text-base mt-2">
-                                Conveniently impact front-end niches via maintainable.
+                            <h2 className="text-lg sm:text-xl font-semibold mt-2 text-white">HAPPY CLIENTS</h2>
+                            <p className="text-gray-600 text-sm sm:text-base mt-2 max-w-xs">
+                                Trusted by businesses and individuals worldwide who continue
+                                to rely on us for their success and growth.
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
+
 
         </div>
     );
