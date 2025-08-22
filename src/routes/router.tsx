@@ -1,6 +1,7 @@
 import App from "@/App";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
+import FaqPage from "@/pages/Faq";
 import Faq from "@/pages/Faq";
 import Features from "@/pages/Features";
 import Home from "@/pages/Home";
@@ -24,13 +25,17 @@ const router = createBrowserRouter([
                 Component: Faq
             },
             {
+                path: '/features',
+                Component: Features
+            },
+            {
+                path: '/faq',
+                Component: FaqPage
+            },
+            {
                 path: '/contact',
                 Component: Contact
             },
-            {
-                path: '/features',
-                Component: Features
-            }
         ]
     }
 ])

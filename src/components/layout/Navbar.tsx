@@ -64,6 +64,8 @@ const StickyNavbar = ({
     { title: "Home", url: "/" },
     { title: "About", url: "/about" },
     { title: "Features", url: "/features" },
+    { title: "Faq", url: "/faq" },
+    { title: "Contact Us", url: "/contact" },
   ],
   auth = {
     login: { title: "Login", url: "#" },
