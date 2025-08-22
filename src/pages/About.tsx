@@ -13,7 +13,7 @@ const About = () => {
 
             <AboutSection />
             <div>
-                <div className="container mx-auto px-6 py-12">
+                <div className="container mx-auto px-6 md:px-16 py-12">
                     {/* Service Description */}
 
 
@@ -41,13 +41,13 @@ const About = () => {
                                 { name: "Sarah Khan", role: "Head of Operations", img: "https://i.pravatar.cc/150?img=47" },
                                 { name: "Imran Hossain", role: "Tech Lead", img: "https://i.pravatar.cc/150?img=12" },
                             ].map((member, i) => (
-                                <Card key={i} className="shadow-md rounded-2xl">
+                                <Card key={i} className="shadow-md rounded-2xl bg-[#15182C] transition ease-in duration-200 transform hover:-translate-y-5">
                                     <CardContent className="flex flex-col items-center p-6">
                                         <Avatar className="h-24 w-24 mb-4">
                                             <AvatarImage src={member.img} alt={member.name} />
                                             <AvatarFallback>{member.name[0]}</AvatarFallback>
                                         </Avatar>
-                                        <h3 className="font-semibold text-lg">{member.name}</h3>
+                                        <h3 className="font-semibold text-lg text-white">{member.name}</h3>
                                         <p className="text-sm text-muted-foreground">{member.role}</p>
                                     </CardContent>
                                 </Card>
