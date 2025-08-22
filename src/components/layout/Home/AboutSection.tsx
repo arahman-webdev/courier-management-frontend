@@ -34,10 +34,10 @@ function Counter({ end }: { end: number }) {
 
 const AboutSection = () => {
     return (
-        <div className="container mx-auto py-16 md:py-36 px-10">
-            <div className="flex flex-col md:flex-row gap-6 items-center">
+        <div className="container mx-auto py-16 md:pt-20 px-10">
+            <div className="flex flex-col lg:flex-row gap-6 items-center">
                 {/* Image Section */}
-                <div className="relative w-full md:w-1/2 h-[300px] sm:h-[400px] lg:h-[500px]">
+                <div className="relative w-full lg:w-1/2 h-[300px] sm:h-[400px] lg:h-[500px]">
 
                     {/* Main Image */}
                     <img
@@ -73,14 +73,13 @@ const AboutSection = () => {
                 </div>
 
                 {/* Content Section */}
-                <div className="w-full md:w-1/2 mt-10 md:mt-0 text-center md:text-left">
+                <div className="w-full lg:w-1/2 mt-10 md:mt-0 text-center md:text-left">
                     <SectionTitle title="About Us"></SectionTitle>
                     <h2 className="text-2xl sm:text-3xl md:text-5xl  mb-4 leading-16 font-bold">WELCOME WORLD WIDE BEST TRANSPORT COMPANY</h2>
                     <div className="flex items-center gap-5 py-4">
-                        <div className="bg-primary h-16 w-2">
-                        </div>
+                        <div className="bg-primary h-24 w-2"></div>
                         <p className="text-2xl ">
-                            Competently implement efficient e-commerce without cross-unit growth strategies.
+                            SwiftParcel is a fast, reliable, and secure parcel delivery service designed to make sending and receiving packages simple.we ensure your parcels reach their destination on time, every time.
                         </p>
                     </div>
                     <div className="flex flex-col gap-3 py-3">
