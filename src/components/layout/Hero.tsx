@@ -1,15 +1,15 @@
 
-
+import heroImg from "../../assets/images/hero.png"
 
 
 const Hero = () => {
   return (
     <section
       className="relative flex items-center min-h-[70vh] bg-cover bg-center"
-      style={{ backgroundImage: "url('https://i.ibb.co.com/xSPgyk8h/room-06.jpg')" }}
+      style={{ backgroundImage: `url(${heroImg})` }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50 z-0" />
+    <div className="absolute inset-0 bg-gradient-to-r from-[#00040a] to-[#070f1d]/50 z-0" />
 
       {/* Content */}
       <div className="container relative z-10 mx-auto px-6 py-16">
