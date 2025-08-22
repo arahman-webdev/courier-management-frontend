@@ -8,6 +8,30 @@ import { CheckCheck } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { Button } from "@/components/ui/button"
 
+import { useEffect, useRef } from "react";
+import { motion, useMotionValue, useTransform, animate, useInView } from "framer-motion";
+
+function Counter({ end }: { end: number }) {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => Math.floor(latest));
+
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true }); // runs only once when visible
+
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(count, end, { duration: 3 });
+      return controls.stop;
+    }
+  }, [isInView, end, count]);
+
+  return (
+    <motion.span ref={ref}>
+      {rounded}
+    </motion.span>
+  );
+}
+
 const AboutSection = () => {
     return (
         <div className="container mx-auto py-16 md:py-36 px-10">
@@ -100,7 +124,7 @@ const AboutSection = () => {
 
                         {/* Stat Item */}
                         <div className="flex flex-col items-center text-center relative">
-                            <span className="text-primary text-4xl sm:text-5xl font-extrabold">3000+</span>
+                            <span className="text-primary text-4xl sm:text-5xl font-extrabold"> <Counter end={3000} />+</span>
                             <h2 className="text-lg sm:text-xl font-semibold mt-2 text-white">PROJECT COMPLETE</h2>
                             <p className="text-gray-600 text-sm sm:text-base mt-2 max-w-xs">
                                 Successfully delivered thousands of projects across multiple industries,
@@ -111,7 +135,7 @@ const AboutSection = () => {
 
                         {/* Stat Item */}
                         <div className="flex flex-col items-center text-center relative">
-                            <span className="text-primary text-4xl sm:text-5xl font-extrabold">700+</span>
+                            <span className="text-primary text-4xl sm:text-5xl font-extrabold"><Counter end={300} />+ </span>
                             <h2 className="text-lg sm:text-xl font-semibold mt-2 text-white">BEST EMPLOYEES</h2>
                             <p className="text-gray-600 text-sm sm:text-base mt-2 max-w-xs">
                                 A dedicated team of skilled professionals committed to driving
@@ -122,7 +146,7 @@ const AboutSection = () => {
 
                         {/* Stat Item */}
                         <div className="flex flex-col items-center text-center relative">
-                            <span className="text-primary text-4xl sm:text-5xl font-extrabold">350+</span>
+                            <span className="text-primary text-4xl sm:text-5xl font-extrabold"><Counter end={350} />+</span>
                             <h2 className="text-lg sm:text-xl font-semibold mt-2 text-white">WORLD AWARDS</h2>
                             <p className="text-gray-600 text-sm sm:text-base mt-2 max-w-xs">
                                 Recognized globally with awards for outstanding performance,
@@ -133,7 +157,7 @@ const AboutSection = () => {
 
                         {/* Stat Item */}
                         <div className="flex flex-col items-center text-center">
-                            <span className="text-primary text-4xl sm:text-5xl font-extrabold">1500+</span>
+                            <span className="text-primary text-4xl sm:text-5xl font-extrabold"><Counter end={700}/>+</span>
                             <h2 className="text-lg sm:text-xl font-semibold mt-2 text-white">HAPPY CLIENTS</h2>
                             <p className="text-gray-600 text-sm sm:text-base mt-2 max-w-xs">
                                 Trusted by businesses and individuals worldwide who continue

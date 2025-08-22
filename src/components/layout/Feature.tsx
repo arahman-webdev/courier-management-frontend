@@ -1,4 +1,4 @@
-import React from "react";
+
 import { DollarSign, Search, Warehouse } from "lucide-react"; // example icons
 
 // You can move these to a data file if you wish

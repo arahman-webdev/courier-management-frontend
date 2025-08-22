@@ -52,12 +52,12 @@ const OurServiceSection = () => {
   ];
 
   return (
-    <div className="container mx-auto py-16">
+    <div className="container mx-auto py-16 px-6">
       {/* Section Header */}
       <div className="space-y-5 py-7 text-center">
         <SectionTitle title="Our Services" />
-        <h2 className="text-5xl font-bold">OUR SERVICE FOR YOU</h2>
-        <p className="text-xl text-gray-600">
+        <h2 className="md:text-5xl text-3xl font-bold">OUR SERVICE FOR YOU</h2>
+        <p className="md:text-xl text-xs text-gray-600">
           Delivering speed, security, and reliability for all your parcel needs.
           <br />
           From local deliveries to international shipping — we’ve got you covered.
@@ -83,7 +83,7 @@ const OurServiceSection = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <div className="mr-44">
+        <div className="mr-44 hidden md:block">
           <CarouselPrevious className="hover:bg-primary shadow-2xl" />
           <CarouselNext className="hover:bg-primary text-6xl transition-all ease-in-out shadow-2xl" />
         </div>

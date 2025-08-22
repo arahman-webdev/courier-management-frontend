@@ -49,40 +49,42 @@ const infoItems = [
 
 function ContactInfoBar() {
   return (
-    <div className="bg-[#15182C] py-8 px-6 flex flex-col md:flex-row justify-center items-start gap-10 md:gap-20 w-full overflow-x-auto">
-      {infoItems.map((item, idx) => (
-        <div key={idx} className="flex items-start gap-4 relative">
-          {/* Icon */}
-          <div className="relative shrink-0">
-            <div className="absolute top-2 left-2 w-12 h-12 md:w-16 md:h-16 bg-[#24273E] rounded-[10px] z-0" />
-            <div className="w-12 h-12 md:w-16 md:h-16 bg-[#FF4C1D] rounded-[10px] flex items-center justify-center relative z-10">
-              {item.icon}
+    <div className="bg-[#15182C] py-8 px-6 w-full">
+      <div className=" flex flex-col  lg:flex-row justify-center items-start gap-10 md:gap-20 container mx-auto ">
+        {infoItems.map((item, idx) => (
+          <div key={idx} className="flex items-start gap-4 relative container">
+            {/* Icon */}
+            <div className="relative shrink-0">
+              <div className="absolute top-2 left-2 w-12 h-12 md:w-16 md:h-16 bg-[#24273E] rounded-[10px] z-0" />
+              <div className="w-12 h-12 md:w-16 md:h-16 bg-[#FF4C1D] rounded-[10px] flex items-center justify-center relative z-10">
+                {item.icon}
+              </div>
             </div>
-          </div>
 
-          {/* Text */}
-          <div>
-            <div className="text-white font-bold text-base md:text-lg mb-1">{item.title}</div>
-            {item.lines.map((line, i) => (
-              <div key={i} className="text-[#CCD3E1] text-sm md:text-base leading-tight">{line}</div>
-            ))}
-          </div>
+            {/* Text */}
+            <div>
+              <div className="text-white font-bold text-base md:text-lg mb-1">{item.title}</div>
+              {item.lines.map((line, i) => (
+                <div key={i} className="text-[#CCD3E1] text-sm md:text-base leading-tight">{line}</div>
+              ))}
+            </div>
 
-          {/* Arrow connector (only desktop) */}
-          {idx < infoItems.length - 1 && (
-            <svg
-              className="absolute right-[-30px] top-1/2 -translate-y-1/2 hidden xl:block"
-              width="40"
-              height="100"
-              viewBox="0 0 60 130"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M0 0L60 65L0 130" stroke="#23263B" strokeWidth="2" />
-            </svg>
-          )}
-        </div>
-      ))}
+            {/* Arrow connector (only desktop) */}
+            {idx < infoItems.length - 1 && (
+              <svg
+                className="absolute right-[-30px] top-1/2 -translate-y-1/2 hidden xl:block"
+                width="40"
+                height="100"
+                viewBox="0 0 60 130"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M0 0L60 65L0 130" stroke="#23263B" strokeWidth="2" />
+              </svg>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
