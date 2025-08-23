@@ -9,35 +9,63 @@ import {
 import { Input } from "@/components/ui/input"
 
 import { FormDescription, FormField, FormMessage, FormItem, FormLabel, FormControl, Form } from "@/components/ui/form"
-import { useForm, type SubmitHandler } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import Password from "./layout/Password"
 import { Link } from "react-router"
-import { useLoginMutation } from "@/redux/features/auth.api"
+import { useRegisterMutation } from "@/redux/features/auth.api"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+
+
+const formSchema = z.object({
+    name: z.string().min(2, {
+        message: "Username must be at least 2 characters.",
+    }),
+    email: z.email().min(4, { message: "Email must be at least 4 charecter" }).max(50),
+    password: z.string().min(6, { error: "Password must be at least 6 charecter" }),
+    confirmPassword: z.string().min(6, { error: "Confirm Password must be at least 6 charecter" })
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Password do not match",
+    path: ["confirmPassword"]
+})
 
 
 
-type LoginRequest = {
-    email: string
-    password: string
-}
-
-export function LoginForm({
+export function RegisterForm({
     className,
     ...props
 }: React.ComponentProps<"div">) {
 
 
 
-    const form = useForm<LoginRequest>()
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            name: "",
+            email: "",
+            password: "",
+            confirmPassword: ""
+        }
+    })
 
-    const [loginUser] = useLoginMutation()
-    const onSubmit: SubmitHandler<LoginRequest> = async (data) => {
+    const [registerUser] = useRegisterMutation()
+    const onSubmit = async (data: z.infer<typeof formSchema>) => {
+
+        console.log(data)
         try {
-            const res = await loginUser(data).unwrap()
-            console.log(data)
-            console.log(res)
-        } catch (error) {
-            console.log(error)
+          const userData = {
+            ...data,
+            Available: true
+          }
+
+          console.log(userData)
+
+
+          const response = await registerUser(userData).unwrap()
+          console.log(response)
+        } catch (error: unknown) {
+          console.log(error)
+
         }
     }
 
@@ -53,12 +81,28 @@ export function LoginForm({
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                                 <FormField
                                     control={form.control}
+                                    name="name"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Your Name</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="Abdur Rahman" type="text" {...field} />
+                                            </FormControl>
+                                            <FormDescription className="sr-only">
+                                                This is your public display name.
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
                                     name="email"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Your Email</FormLabel>
+                                            <FormLabel>Email</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="email" type="email" required {...field} value={field.value || ""} />
+                                                <Input placeholder="arahman@gmail.com" type="email" {...field} />
                                             </FormControl>
                                             <FormDescription className="sr-only">
                                                 This is your public display name.
@@ -72,9 +116,9 @@ export function LoginForm({
                                     name="password"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Your Password</FormLabel>
+                                            <FormLabel>Password</FormLabel>
                                             <FormControl>
-                                                <Password {...field} value={field.value || ""} />
+                                                <Password {...field} />
                                             </FormControl>
                                             <FormDescription className="sr-only">
                                                 This is your public display name.
@@ -83,18 +127,30 @@ export function LoginForm({
                                         </FormItem>
                                     )}
                                 />
-                                <div className="grid gap-6">
-                                    <Button type="submit" className="w-full">
-                                        Login
-                                    </Button>
-                                </div>
+                                <FormField
+                                    control={form.control}
+                                    name="confirmPassword"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Confirm Password</FormLabel>
+                                            <FormControl>
+                                                <Password {...field} />
+                                            </FormControl>
+                                            <FormDescription className="sr-only">
+                                                This is your public display name.
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <Button type="submit" className="w-full">Login</Button>
                             </form>
                         </Form>
 
                         <div className="text-center text-sm">
-                            Don&apos;t have an account?{" "}
-                            <Link to='/register' className="underline underline-offset-4">
-                                Sign up
+                            Do you have an account?{" "}
+                            <Link to='/login' className="underline underline-offset-4">
+                                Login
                             </Link>
                         </div>
                     </div>
