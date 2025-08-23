@@ -10,6 +10,7 @@ import { generateRoutes } from "@/utills/generateRoutes";
 import { createBrowserRouter } from "react-router";
 import { adminSidebarItems } from "./admin-sidebar";
 import LoginPage from "@/pages/LoginPage";
+import Register from "@/pages/Register";
 
 const router = createBrowserRouter([
     {
@@ -44,14 +45,6 @@ const router = createBrowserRouter([
 
         
     },
-    // {
-    //     Component: DashboardLayout,
-    //     path: '/admin'
-    // },
-    // {
-    //     Component: DashboardLayout,
-    //     path: '/admin/manage'
-    // },
         {
         Component: DashboardLayout,
         path: "/admin",
@@ -62,6 +55,10 @@ const router = createBrowserRouter([
     {
         path: '/login',
         Component: LoginPage
+    },
+    {
+        path: '/register',
+        Component: Register
     }
 ])
 
