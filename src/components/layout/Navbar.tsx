@@ -1,3 +1,296 @@
+// import React, { useEffect, useRef, useState } from "react";
+// import { Menu } from "lucide-react";
+// import {
+//   Accordion,
+//   AccordionContent,
+//   AccordionItem,
+//   AccordionTrigger,
+// } from "@/components/ui/accordion";
+// import { Button } from "@/components/ui/button";
+// import {
+//   NavigationMenu,
+
+//   NavigationMenuItem,
+//   NavigationMenuLink,
+//   NavigationMenuList,
+
+// } from "@/components/ui/navigation-menu";
+// import {
+//   Sheet,
+//   SheetContent,
+//   SheetHeader,
+//   SheetTitle,
+//   SheetTrigger,
+// } from "@/components/ui/sheet";
+// import { ModeToggle } from "./mode-toggle";
+// import { Link, useNavigate } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+
+// // ✅ import your RTK query hooks
+// import { useGetMeQuery, useLogoutUserMutation, authApi } from "@/features/auth/authApi";
+
+// interface MenuItem {
+//   title: string;
+//   url: string;
+//   description?: string;
+//   icon?: React.ReactNode;
+//   items?: MenuItem[];
+//   role?: string;
+// }
+
+// interface Navbar1Props {
+//   logo?: {
+//     url: string;
+//     src: string;
+//     alt: string;
+//     title: string;
+//   };
+//   navigationLinks?: MenuItem[];
+//   auth?: {
+//     login: {
+//       title: string;
+//       url: string;
+//     };
+//     signup: {
+//       title: string;
+//       url: string;
+//     };
+//   };
+// }
+
+// const StickyNavbar = ({
+//   logo = {
+//     url: "/",
+//     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
+//     alt: "logo",
+//     title: "SwiftParcel",
+//   },
+//   navigationLinks = [
+//     { url: "/", title: "Home", role: "PUBLIC" },
+//     { url: "/about", title: "About", role: "PUBLIC" },
+//     { url: "/features", title: "Features", role: "PUBLIC" },
+//     { url: "/faq", title: "FAQ", role: "PUBLIC" },
+//     { url: "/contact", title: "Contact Us", role: "PUBLIC" },
+//     { url: "/dashboard", title: "Dashboard", role: "USER" },
+//   ],
+//   auth = {
+//     login: { title: "Login", url: "/login" },
+//     signup: { title: "Sign up", url: "/register" },
+//   },
+// }: Navbar1Props) => {
+//   const [showSticky, setShowSticky] = useState(false);
+//   const lastScroll = useRef(0);
+//   const ticking = useRef(false);
+
+//   const { data, isLoading } = useGetMeQuery(undefined);
+//   const [logoutUser] = useLogoutUserMutation();
+//   const navigate = useNavigate();
+//   const dispatch = useDispatch();
+//   const user = data?.data;
+
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       if (!ticking.current) {
+//         window.requestAnimationFrame(() => {
+//           const scrollY = window.scrollY;
+//           if (scrollY > 120 && scrollY < lastScroll.current) {
+//             setShowSticky(true);
+//           } else if (scrollY <= 120 || scrollY > lastScroll.current) {
+//             setShowSticky(false);
+//           }
+//           lastScroll.current = scrollY;
+//           ticking.current = false;
+//         });
+//         ticking.current = true;
+//       }
+//     };
+
+//     window.addEventListener("scroll", handleScroll, { passive: true });
+//     return () => window.removeEventListener("scroll", handleScroll);
+//   }, []);
+
+//   if (isLoading) return <p className="text-center py-4">Loading...</p>;
+
+//   const handleLogout = async () => {
+//     await logoutUser(undefined);
+//     navigate("/login");
+//     dispatch(authApi.util.resetApiState());
+//   };
+
+//   return (
+//     <>
+//       {/* Main Navbar */}
+//       <section className="py-4 px-5 bg-background transition-all duration-300">
+//         <div className="container mx-auto">
+//           <NavbarContent logo={logo} menu={navigationLinks} auth={auth} userRole={user?.role} onLogout={handleLogout} />
+//         </div>
+//       </section>
+
+//       {/* Sticky Navbar */}
+//       <div
+//         className={`fixed top-0 left-0 w-full z-50 bg-background shadow transition-transform duration-300 ${
+//           showSticky ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+//         }`}
+//       >
+//         <div className="container mx-auto px-5 py-2">
+//           <NavbarContent logo={logo} menu={navigationLinks} auth={auth} userRole={user?.role} onLogout={handleLogout} />
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// function NavbarContent({
+//   logo,
+//   menu,
+//   auth,
+//   userRole,
+//   onLogout,
+// }: {
+//   logo: Navbar1Props["logo"];
+//   menu: MenuItem[];
+//   auth: Navbar1Props["auth"];
+//   userRole?: string;
+//   onLogout: () => void;
+// }) {
+//   return (
+//     <>
+//       {/* Desktop */}
+//       <nav className="hidden justify-between lg:flex">
+//         <div className="flex items-center gap-6">
+//           <Link to={logo?.url} className="flex items-center gap-2">
+//             <img src={logo?.src} className="max-h-8 dark:invert" alt={logo?.alt} />
+//             <span className="text-lg font-semibold tracking-tighter">{logo?.title}</span>
+//           </Link>
+//         </div>
+//         <div className="flex items-center">
+//           <NavigationMenu>
+//             <NavigationMenuList className="gap-2">
+//               {menu.map((link, index) => {
+//                 if (link.role === "PUBLIC" || link.role === userRole) {
+//                   return (
+//                     <NavigationMenuItem key={index}>
+//                       <NavigationMenuLink
+//                         asChild
+//                         className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+//                       >
+//                         <Link to={link.url}>{link.title}</Link>
+//                       </NavigationMenuLink>
+//                     </NavigationMenuItem>
+//                   );
+//                 }
+//                 return null;
+//               })}
+//             </NavigationMenuList>
+//           </NavigationMenu>
+//         </div>
+//         <div className="flex gap-2 items-center">
+//           {userRole ? (
+//             <Button onClick={onLogout} variant="outline" size="sm">
+//               Logout
+//             </Button>
+//           ) : (
+//             <>
+//               <Button asChild variant="outline" size="sm">
+//                 <Link to={auth?.login.url}>{auth?.login.title}</Link>
+//               </Button>
+//               <Button asChild size="sm">
+//                 <Link to={auth?.signup.url}>{auth?.signup.title}</Link>
+//               </Button>
+//             </>
+//           )}
+//           <ModeToggle />
+//         </div>
+//       </nav>
+
+//       {/* Mobile */}
+//       <div className="block lg:hidden">
+//         <div className="flex items-center justify-between">
+//           <Link to={logo?.url} className="flex items-center gap-2">
+//             <img src={logo?.src} className="max-h-8 dark:invert" alt={logo?.alt} />
+//           </Link>
+//           <Sheet>
+//             <SheetTrigger asChild>
+//               <Button variant="outline" size="icon">
+//                 <Menu className="size-4" />
+//               </Button>
+//             </SheetTrigger>
+//             <SheetContent className="overflow-y-auto">
+//               <SheetHeader>
+//                 <SheetTitle>
+//                   <Link to={logo?.url} className="flex items-center gap-2">
+//                     <img src={logo?.src} className="max-h-8 dark:invert" alt={logo?.alt} />
+//                   </Link>
+//                 </SheetTitle>
+//               </SheetHeader>
+//               <div className="flex flex-col gap-6 p-4">
+//                 <Accordion type="single" collapsible className="flex w-full flex-col gap-4">
+//                   {menu.map((item) =>
+//                     item.role === "PUBLIC" || item.role === userRole ? renderMobileMenuItem(item) : null
+//                   )}
+//                 </Accordion>
+//                 <div className="flex flex-col gap-3">
+//                   {userRole ? (
+//                     <Button onClick={onLogout} variant="outline">
+//                       Logout
+//                     </Button>
+//                   ) : (
+//                     <>
+//                       <Button asChild variant="outline">
+//                         <Link to={auth?.login.url}>{auth?.login.title}</Link>
+//                       </Button>
+//                       <Button asChild>
+//                         <Link to={auth?.signup.url}>{auth?.signup.title}</Link>
+//                       </Button>
+//                     </>
+//                   )}
+//                 </div>
+//               </div>
+//             </SheetContent>
+//           </Sheet>
+//         </div>
+//       </div>
+//     </>
+//   );
+// }
+
+// const renderMobileMenuItem = (item: MenuItem) => {
+//   if (item.items) {
+//     return (
+//       <AccordionItem key={item.title} value={item.title} className="border-b-0">
+//         <AccordionTrigger className="text-md py-0 font-semibold hover:no-underline">{item.title}</AccordionTrigger>
+//         <AccordionContent className="mt-2">
+//           {item.items.map((subItem) => (
+//             <SubMenuLink key={subItem.title} item={subItem} />
+//           ))}
+//         </AccordionContent>
+//       </AccordionItem>
+//     );
+//   }
+//   return (
+//     <Link key={item.title} to={item.url} className="text-md font-semibold">
+//       {item.title}
+//     </Link>
+//   );
+// };
+
+// const SubMenuLink = ({ item }: { item: MenuItem }) => (
+//   <Link
+//     to={item.url}
+//     className="hover:bg-muted hover:text-accent-foreground flex flex-row gap-4 rounded-md p-3 text-sm font-semibold"
+//   >
+//     {item.icon && <div className="text-foreground">{item.icon}</div>}
+//     <div>
+//       <div>{item.title}</div>
+//       {item.description && <p className="text-muted-foreground text-sm leading-snug">{item.description}</p>}
+//     </div>
+//   </Link>
+// );
+
+// export { StickyNavbar as Navbar };
+
+
+
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { Menu } from "lucide-react";
@@ -66,9 +359,10 @@ const StickyNavbar = ({
     { title: "Features", url: "/features" },
     { title: "Faq", url: "/faq" },
     { title: "Contact Us", url: "/contact" },
+     { title: "Dashboard", url: "/admin",},
   ],
   auth = {
-    login: { title: "Login", url: "#" },
+    login: { title: "Login", url: "/login" },
     signup: { title: "Sign up", url: "#" },
   },
 }: Navbar1Props) => {

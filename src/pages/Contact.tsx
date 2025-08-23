@@ -1,5 +1,4 @@
-import { Input } from "@/components/ui/input";
-import { AtSignIcon, Mail, User } from "lucide-react";
+
 
 
 const Contact = () => {
