@@ -7,6 +7,13 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
 import { FormDescription, FormField, FormMessage, FormItem, FormLabel, FormControl, Form } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
@@ -15,6 +22,7 @@ import { Link } from "react-router"
 import { useRegisterMutation } from "@/redux/features/auth.api"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { toast } from "sonner"
 
 
 const formSchema = z.object({
@@ -23,7 +31,8 @@ const formSchema = z.object({
     }),
     email: z.email().min(4, { message: "Email must be at least 4 charecter" }).max(50),
     password: z.string().min(6, { error: "Password must be at least 6 charecter" }),
-    confirmPassword: z.string().min(6, { error: "Confirm Password must be at least 6 charecter" })
+    confirmPassword: z.string().min(6, { error: "Confirm Password must be at least 6 charecter" }),
+    role: z.enum(["SENDER", "RECEIVER"])
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Password do not match",
     path: ["confirmPassword"]
@@ -44,30 +53,34 @@ export function RegisterForm({
             name: "",
             email: "",
             password: "",
-            confirmPassword: ""
+            confirmPassword: "",
+
         }
     })
 
     const [registerUser] = useRegisterMutation()
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
-
         console.log(data)
         try {
-          const userData = {
-            ...data,
-            Available: true
-          }
+            const userData = { ...data, Available: true };
 
-          console.log(userData)
+            const response = await registerUser(userData).unwrap();
+            console.log(response);
+            toast.success("Successfully created user");
+        } catch (error: any) {
+            console.log(error);
 
 
-          const response = await registerUser(userData).unwrap()
-          console.log(response)
-        } catch (error: unknown) {
-          console.log(error)
+            if ('data' in error && error.data) {
 
+                toast.error(error.data.message || "Something went wrong");
+            } else if ('message' in error) {
+                toast.error(error.message);
+            } else {
+                toast.error("Something went wrong");
+            }
         }
-    }
+    };
 
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -76,9 +89,9 @@ export function RegisterForm({
                     <CardTitle className="text-xl">Welcome back</CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid gap-6">
+                    <div className="grid gap-4">
                         <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
                                 <FormField
                                     control={form.control}
                                     name="name"
@@ -86,7 +99,7 @@ export function RegisterForm({
                                         <FormItem>
                                             <FormLabel>Your Name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Abdur Rahman" type="text" {...field} />
+                                                <Input className="rounded-none p-6" placeholder="Abdur Rahman" type="text" {...field} />
                                             </FormControl>
                                             <FormDescription className="sr-only">
                                                 This is your public display name.
@@ -102,7 +115,7 @@ export function RegisterForm({
                                         <FormItem>
                                             <FormLabel>Email</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="arahman@gmail.com" type="email" {...field} />
+                                                <Input className="rounded-none p-6" placeholder="arahman@gmail.com" type="email" {...field} />
                                             </FormControl>
                                             <FormDescription className="sr-only">
                                                 This is your public display name.
@@ -143,7 +156,35 @@ export function RegisterForm({
                                         </FormItem>
                                     )}
                                 />
-                                <Button type="submit" className="w-full">Login</Button>
+                                <FormField
+                                    control={form.control}
+                                    name="role"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Role</FormLabel>
+                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                <FormControl className="w-full rounded-none p-5">
+                                                    <SelectTrigger>
+                                                        <SelectValue placeholder="Select a role to display" />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent>
+                                                    <SelectItem value="RECEIVER">RECEIVER</SelectItem>
+                                                    <SelectItem value="SENDER">SENDER</SelectItem>
+
+                                                </SelectContent>
+                                            </Select>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                               
+                                <Button
+                                    type="submit"
+                                    className="w-full bg-[#373DD2] text-white font-semibold rounded-full py-2 text-base"
+                                >
+                                    SIGN UP
+                                </Button>
                             </form>
                         </Form>
 
@@ -161,16 +202,23 @@ export function RegisterForm({
                     </div>
                     <div className="">
                         <Button
-                            // http://localhost:5000/api/v1/auth/google
-                            // onClick={() => window.open(`${config.baseUrl}/auth/google`)}
-                            variant="outline" type="button" className="w-full">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            variant="outline"
+                            type="button"
+                            className="w-full flex items-center justify-center gap-2 font-semibold rounded-full py-2"
+                        // onClick={() => window.open(`${config.baseUrl}/auth/google`)}
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                            >
                                 <path
-                                    d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-                                    fill="currentColor"
+                                    d="M21.805 10.023h-9.785v3.978h5.676c-.245 1.273-1.478 3.743-5.676 3.743-3.417 0-6.193-2.828-6.193-6.317s2.776-6.317 6.193-6.317c1.949 0 3.26.828 4.012 1.545l2.741-2.662c-1.736-1.613-3.984-2.606-6.753-2.606-5.388 0-9.765 4.372-9.765 9.76s4.377 9.76 9.765 9.76c5.627 0 9.354-3.966 9.354-9.56 0-.642-.073-1.134-.162-1.599z"
+                                    fill="#EA4335"
                                 />
                             </svg>
-                            <span className="sr-only">Login with Google</span>
+                            LOG IN WITH GOOGLE
                         </Button>
                     </div>
                 </CardContent>

@@ -30,12 +30,12 @@ interface RegisterResponse {
   message: string
 }
 
-interface UserResponse {
-  _id: string
-  name: string
-  email: string
-  role: string
-}
+// interface UserResponse {
+//   _id: string
+//   name: string
+//   email: string
+//   role: string
+// }
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -59,9 +59,9 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     // 🔹 Get Current User Profile
-    me: builder.query<UserResponse, void>({
+    me: builder.query({
       query: () => ({
-        url: "/auth/me",
+        url: "/user/me",
         method: "GET",
       }),
       providesTags: ["USER"],
@@ -80,4 +80,4 @@ export const authApi = baseApi.injectEndpoints({
 
 
 
-export const {useLoginMutation, useRegisterMutation}  = authApi
+export const {useLoginMutation, useRegisterMutation, useMeQuery}  = authApi
