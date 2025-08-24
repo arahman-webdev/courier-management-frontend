@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/redux/features/auth/auth.api.ts
 // import { baseApi } from "../baseApi"
 
@@ -9,6 +10,7 @@ interface LoginRequest {
 }
 
 interface LoginResponse {
+  data: any
   success: boolean
   token?: string // if your backend returns token
   user?: {
@@ -39,7 +41,7 @@ interface RegisterResponse {
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // 🔹 Login
+    //  Login
     login: builder.mutation<LoginResponse, LoginRequest>({
       query: (userInfo) => ({
         url: "/auth/login",
@@ -49,7 +51,7 @@ export const authApi = baseApi.injectEndpoints({
       invalidatesTags: ["USER"], // so user data refreshes
     }),
 
-    // 🔹 Register
+    // Register
     register: builder.mutation<RegisterResponse, RegisterRequest>({
       query: (newUser) => ({
         url: "/user/register",
@@ -58,7 +60,7 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
 
-    // 🔹 Get Current User Profile
+    // Get Current User Profile
     me: builder.query({
       query: () => ({
         url: "/user/me",
@@ -67,7 +69,7 @@ export const authApi = baseApi.injectEndpoints({
       providesTags: ["USER"],
     }),
 
-    // 🔹 Logout
+    // Logout
     logout: builder.mutation<{ success: boolean }, void>({
       query: () => ({
         url: "/auth/logout",

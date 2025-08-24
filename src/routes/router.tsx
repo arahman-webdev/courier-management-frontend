@@ -16,6 +16,7 @@ import Unauthorized from "@/pages/Unauthorized";
 import { withAuth } from "@/utills/withAuth";
 import { role } from "@/constant/constant";
 import type { TRole } from "@/types";
+import PublicRoute from "./PublicRoute";
 
 const router = createBrowserRouter([
     {
@@ -66,11 +67,19 @@ const router = createBrowserRouter([
     },
     {
         path: '/login',
-        Component: LoginPage
+        element: (
+            <PublicRoute>
+                <LoginPage />
+            </PublicRoute>
+        )
     },
     {
         path: '/register',
-        Component: Register
+        element: (
+            <PublicRoute>
+                <Register />
+            </PublicRoute>
+        )
     },
 
     {

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
-    
+
     FormField,
     FormMessage,
     FormItem,
@@ -19,10 +19,13 @@ import {
 } from "@/components/ui/form";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import Password from "./layout/Password";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useLoginMutation } from "@/redux/features/auth.api";
 import { toast } from "sonner";
 import config from "@/config";
+import { role } from "@/constant/constant";
+import { setCredentials } from "@/redux/features/authSlice";
+import { useDispatch } from "react-redux";
 
 type LoginRequest = {
     email: string;
@@ -35,12 +38,25 @@ export function LoginForm({
 }: React.ComponentProps<"div">) {
     const form = useForm<LoginRequest>();
     const [loginUser] = useLoginMutation();
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
+ 
 
     const onSubmit: SubmitHandler<LoginRequest> = async (data) => {
         try {
             const res = await loginUser(data).unwrap();
             // handle success, e.g. redirect
             console.log(res)
+            if (res.success) {
+                toast.success("Logged in successfully");
+                dispatch(setCredentials({ user: res.data.user, token: res.data.accessToken }));
+
+                if (res.data?.user?.role === role.admin) navigate("/admin");
+                if (res.data?.user?.role === role.receiver) navigate("/receiver");
+                if (res.data?.user?.role === role.sender) navigate("/sender");
+            }
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
             if ("data" in error && error.data) {
                 toast.error(error.data.message || "Something went wrong");
@@ -86,7 +102,7 @@ export function LoginForm({
                                         <FormLabel>Email:</FormLabel>
                                         <FormControl>
                                             <Input
-                                            className="rounded-none p-6"
+                                                className="rounded-none p-6"
                                                 placeholder="Email"
                                                 type="email"
                                                 required

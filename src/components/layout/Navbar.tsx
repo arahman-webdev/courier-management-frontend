@@ -27,6 +27,10 @@ import { Link, useNavigate } from "react-router";
 import { useLogoutMutation, useMeQuery } from "@/redux/features/auth.api";
 import Logo from "@/assets/icon/Logo";
 import { ProfileOPen } from "./ProfileOpen";
+import { role } from "@/constant/constant";
+import { logout } from "@/redux/features/authSlice";
+import { useDispatch } from "react-redux";
+import { baseApi } from "@/redux/features/baseApi";
 
 interface MenuItem {
   title: string;
@@ -69,10 +73,15 @@ export function Navbar({
   const [userLogout] = useLogoutMutation();
   const navigate = useNavigate();
   const user = data?.data;
+const dispatch = useDispatch();
+
 
   const handleLogout = async () => {
     try {
       await userLogout(undefined).unwrap();
+
+      dispatch(logout());
+      dispatch(baseApi.util.resetApiState());
       navigate("/login");
     } catch {
       console.error("Logout failed");
@@ -126,7 +135,7 @@ function NavbarContent({
   logo: NavbarProps["logo"];
   menu: MenuItem[];
   auth: NavbarProps["auth"];
-  user?: { name: string; image?: string };
+  user?: { name: string; image?: string, role?:string };
   onLogout: () => void;
 }) {
   return (
@@ -134,7 +143,7 @@ function NavbarContent({
       {/* Desktop */}
       <nav className="hidden lg:flex justify-between items-center">
         {/* Logo */}
-        <Link to={logo?.url} className="flex items-center gap-2">
+        <Link to={logo?.url ?? "/"} className="flex items-center gap-2">
           <Logo />
           <span className="text-lg font-semibold">{logo?.title}</span>
         </Link>
@@ -156,7 +165,7 @@ function NavbarContent({
               <ProfileOPen
                 name={user?.name}
                 img={user?.image}
-                MyDashboard="/my-dashboard"
+                MyDashboard={user?.role?.toLocaleLowerCase()}
                 logout={onLogout}
               />
 
@@ -165,10 +174,10 @@ function NavbarContent({
             <>
 
               <Button asChild variant="outline" size="sm">
-                <Link to={auth?.login.url}>{auth?.login.title}</Link>
+                <Link to={auth?.login.url ?? '/'}>{auth?.login.title}</Link>
               </Button>
               <Button asChild size="sm">
-                <Link to={auth?.signup.url}>{auth?.signup.title}</Link>
+                <Link to={auth?.signup.url ?? "/"}>{auth?.signup.title}</Link>
               </Button>
             </>
           )}
@@ -177,7 +186,7 @@ function NavbarContent({
 
       {/* Mobile */}
       <div className="flex lg:hidden justify-between items-center">
-        <Link to={logo?.url} className="flex items-center gap-2">
+        <Link to={logo?.url ?? "/"} className="flex items-center gap-2">
           <img src={logo?.src} alt={logo?.alt} className="max-h-8 dark:invert" />
         </Link>
 
@@ -190,7 +199,7 @@ function NavbarContent({
           <SheetContent className="overflow-y-auto">
             <SheetHeader>
               <SheetTitle>
-                <Link to={logo?.url} className="flex items-center gap-2">
+                <Link to={logo?.url ?? "/"} className="flex items-center gap-2">
                   <img src={logo?.src} className="max-h-8 dark:invert" alt={logo?.alt} />
                 </Link>
               </SheetTitle>
@@ -212,10 +221,10 @@ function NavbarContent({
               ) : (
                 <div className="flex flex-col gap-3">
                   <Button asChild variant="outline">
-                    <Link to={auth?.login.url}>{auth?.login.title}</Link>
+                    <Link to={auth?.login.url ?? "/"}>{auth?.login.title}</Link>
                   </Button>
                   <Button asChild>
-                    <Link to={auth?.signup.url}>{auth?.signup.title}</Link>
+                    <Link to={auth?.signup.url ?? "/"}>{auth?.signup.title}</Link>
                   </Button>
                 </div>
               )}

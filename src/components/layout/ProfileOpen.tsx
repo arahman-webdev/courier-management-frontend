@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+
 import {
   Popover,
   PopoverContent,
@@ -44,7 +43,7 @@ export const ProfileOPen = ({
     <Popover openOnHover={openOnHover} delay={delay} closeDelay={closeDelay}>
       <PopoverTrigger
         render={
-          <Button variant="outline" className="flex items-center gap-2">
+          <Button variant="outline" className="flex items-center gap-2 cursor-pointer">
             {img && <img src={img} alt={name} className="w-6 h-6 rounded-full" />}
             <span>{name ?? "Profile"}</span>
           </Button>
