@@ -1,8 +1,9 @@
 // import AddTour from "@/pages/admin/AddTour";
 // import Analytics from "@/pages/admin/Analytics";
 
-import About from "@/pages/About";
 import Admin from "@/pages/admin/Admin";
+import ManageAllUsers from "@/pages/admin/ManageAllUsers";
+import ManageParecels from "@/pages/admin/ManageParecels";
 import type { ISidebarItem } from "@/types";
 // import { lazy } from "react";
 
@@ -32,22 +33,18 @@ export const adminSidebarItems: ISidebarItem[] =
     },
 
   {
-    title: "Tour-Management",
+    title: "Curier-Management",
     items: [
       {
         title: "Manage User",
         url: "/admin/manage",
-        Component: About
+        Component: ManageAllUsers
       },
+
       {
-        title: "Add Division",
-        url: "/admin/add-division",
-        Component: About
-      },
-      {
-        title: "Add Tour Type",
-        url: "/admin/add-tour-type",
-        Component: About
+        title: "Manage Parcels",
+        url: "/admin/parcels",
+        Component: ManageParecels
       },
     ],
   },

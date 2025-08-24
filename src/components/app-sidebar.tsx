@@ -14,6 +14,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { getSidebarItems } from "@/utills/getSidebarItems"
+import { useMeQuery } from "@/redux/features/auth.api"
 
 
 
@@ -21,7 +22,11 @@ import { getSidebarItems } from "@/utills/getSidebarItems"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
-  const data = getSidebarItems("ADMIN")
+  const {data:user} = useMeQuery(undefined)
+
+  console.log(user?.data?.role)
+
+  const data = getSidebarItems(user?.data?.role)
 
   console.log(data)
   return (

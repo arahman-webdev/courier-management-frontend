@@ -22,6 +22,7 @@ import Password from "./layout/Password";
 import { Link } from "react-router";
 import { useLoginMutation } from "@/redux/features/auth.api";
 import { toast } from "sonner";
+import config from "@/config";
 
 type LoginRequest = {
     email: string;
@@ -133,7 +134,7 @@ export function LoginForm({
                         variant="outline"
                         type="button"
                         className="w-full flex items-center justify-center gap-2 font-semibold rounded-full py-2"
-                        // onClick={() => window.open(`${config.baseUrl}/auth/google`)}
+                        onClick={() => window.open(`${config.baseUrl}/auth/google`)}
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

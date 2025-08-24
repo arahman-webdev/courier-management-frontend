@@ -11,10 +11,15 @@ import { createBrowserRouter } from "react-router";
 import { adminSidebarItems } from "./admin-sidebar";
 import LoginPage from "@/pages/LoginPage";
 import Register from "@/pages/Register";
+import { receiverSidebarItems } from "./receiver-sidebar";
+import Unauthorized from "@/pages/Unauthorized";
+import { withAuth } from "@/utills/withAuth";
+import { role } from "@/constant/constant";
+import type { TRole } from "@/types";
 
 const router = createBrowserRouter([
     {
-        path:'/',
+        path: '/',
         Component: App,
         children: [
             {
@@ -43,13 +48,20 @@ const router = createBrowserRouter([
             },
         ],
 
-        
+
     },
-        {
-        Component: DashboardLayout,
+    {
+        Component: withAuth(DashboardLayout, role.admin as TRole),
         path: "/admin",
         children: [
             ...generateRoutes(adminSidebarItems)
+        ]
+    },
+    {
+        Component: withAuth(DashboardLayout, role.receiver as TRole),
+        path: "/receiver",
+        children: [
+            ...generateRoutes(receiverSidebarItems)
         ]
     },
     {
@@ -59,18 +71,23 @@ const router = createBrowserRouter([
     {
         path: '/register',
         Component: Register
-    }
+    },
+
+    {
+        path: '/unauthorized',
+        Component: Unauthorized
+    },
 ])
 
 
 export default router
 
 
-  /**
- * What to do to split router for admin, user and guider
- * 
- * at first: create generate route in the utills and map it to look dashboard layout
- * create types for generate route in the type in the index.ts
- * create admin sidebar in the route folder and take everithing that is in this from app-sidebar.tsx 
- * 
- */
+/**
+* What to do to split router for admin, user and guider
+* 
+* at first: create generate route in the utills and map it to look dashboard layout
+* create types for generate route in the type in the index.ts
+* create admin sidebar in the route folder and take everithing that is in this from app-sidebar.tsx 
+* 
+*/

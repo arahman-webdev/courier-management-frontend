@@ -1,8 +1,9 @@
 // import AddTour from "@/pages/admin/AddTour";
 // import Analytics from "@/pages/admin/Analytics";
 
-import About from "@/pages/About";
-import Admin from "@/pages/admin/Admin";
+import ConfirmParcels from "@/pages/receiver/ConfirmParcels";
+import Receiver from "@/pages/receiver/Receiver";
+import ViewParcels from "@/pages/receiver/ViewParcels";
 import type { ISidebarItem } from "@/types";
 // import { lazy } from "react";
 
@@ -11,7 +12,7 @@ import type { ISidebarItem } from "@/types";
 
 
 
-export const adminSidebarItems: ISidebarItem[] = 
+export const receiverSidebarItems: ISidebarItem[] = 
 
   [
     {
@@ -19,37 +20,23 @@ export const adminSidebarItems: ISidebarItem[] =
       items: [
         {
           title: "Analytics",
-          url: "/admin/analytice",
-          Component: Admin
+          url: "/receiver/analytice",
+          Component: Receiver
         },
         {
-          title: "Receiver",
-          url: "/admin/receiver",
-          Component: Admin
+          title: "Confirm Parcel",
+          url: "/receiver/confirm-parcel",
+          Component: ConfirmParcels
+        },
+        {
+          title: "View History",
+          url: "/receiver/view-histroy",
+          Component: ViewParcels
         },
       ],
       
     },
 
-  {
-    title: "Tour-Management",
-    items: [
-      {
-        title: "Manage User",
-        url: "/admin/manage",
-        Component: About
-      },
-      {
-        title: "Add Division",
-        url: "/admin/add-division",
-        Component: About
-      },
-      {
-        title: "Add Tour Type",
-        url: "/admin/add-tour-type",
-        Component: About
-      },
-    ],
-  },
+ 
   ]
 
