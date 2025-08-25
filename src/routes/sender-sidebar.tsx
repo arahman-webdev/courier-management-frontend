@@ -3,10 +3,12 @@
 
 
 
+
 import CreateParcel from "@/pages/sender/CreateParcel";
 import Sender from "@/pages/sender/Sender";
+import ViewAll from "@/pages/sender/ViewAll";
 import type { ISidebarItem } from "@/types";
-import { House, PackagePlus, PackageX } from "lucide-react";
+import { House, Package, PackagePlus, PackageX } from "lucide-react";
 import { lazy } from "react";
 // import { lazy } from "react";
 
@@ -42,10 +44,10 @@ export const senderSidebarItems: ISidebarItem[] =
           icon: PackagePlus,   // 📦➕ create new package
         },
         {
-          title: "Cancel Parcel",
-          url: "/sender/cancel-parcel",
-          Component: CancelParcel,
-          icon: PackageX,      // 📦❌ cancel package
+          title: "View Parcels",
+          url: "/sender/view-parcel",
+          Component: ViewAll,
+          icon: Package,      
         },
 
       ]
