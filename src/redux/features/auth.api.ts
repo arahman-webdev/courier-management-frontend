@@ -68,6 +68,22 @@ export const authApi = baseApi.injectEndpoints({
       }),
       providesTags: ["USER"],
     }),
+    // Get All Users
+    allUsers: builder.query({
+      query: () => ({
+        url: "/user",
+        method: "GET",
+      }),
+      providesTags: ["USER"],
+    }),
+    // Get All Users
+    allReceivers: builder.query({
+      query: () => ({
+        url: "/user/receivers",
+        method: "GET",
+      }),
+      providesTags: ["USER"],
+    }),
 
     // Logout
     logout: builder.mutation<{ success: boolean }, void>({
@@ -82,4 +98,6 @@ export const authApi = baseApi.injectEndpoints({
 
 
 
-export const {useLoginMutation, useRegisterMutation, useMeQuery, useLogoutMutation}  = authApi
+export const {
+  useLoginMutation, useRegisterMutation, useMeQuery, useLogoutMutation, useAllUsersQuery, useAllReceiversQuery
+}  = authApi

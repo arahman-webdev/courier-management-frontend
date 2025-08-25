@@ -14,9 +14,7 @@ export default function PublicRoute({ children }: { children: JSX.Element }) {
     if (user.role === role.admin) return <Navigate to="/admin" replace />;
     if (user.role === role.receiver) return <Navigate to="/receiver" replace />;
     if (user.role === role.sender) return <Navigate to="/sender" replace />;
-    if(!user.role){
-        return <Navigate to={'/login'} />
-    }
+
   }
 
   return children;

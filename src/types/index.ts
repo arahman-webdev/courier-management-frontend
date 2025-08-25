@@ -3,6 +3,7 @@
 // }
 
 
+import type { LucideIcon } from "lucide-react"
 import type { ComponentType } from "react"
 
 // export type {IOtpSend, ILogin, IVerifyOtpSend} from "./auth.type"
@@ -16,8 +17,10 @@ export interface IResponse<T> {
 
 export interface ISidebarItem {
   title: string,
+  icon?: LucideIcon;
   items: {
     title: string,
+    icon?: LucideIcon;
     url: string,
     Component: ComponentType
   }[];

@@ -5,6 +5,7 @@ import Admin from "@/pages/admin/Admin";
 import ManageAllUsers from "@/pages/admin/ManageAllUsers";
 import ManageParecels from "@/pages/admin/ManageParecels";
 import type { ISidebarItem } from "@/types";
+import { LayoutDashboard, PackageSearch, Users } from "lucide-react";
 // import { lazy } from "react";
 
 // const Analytics = lazy(() => import("@/pages/admin/Analytics"))
@@ -17,6 +18,7 @@ export const adminSidebarItems: ISidebarItem[] =
   [
     {
       title: "Dashboard",
+      icon: LayoutDashboard,
       items: [
         {
           title: "Analytics",
@@ -32,21 +34,22 @@ export const adminSidebarItems: ISidebarItem[] =
       
     },
 
-  {
-    title: "Curier-Management",
-    items: [
-      {
-        title: "Manage User",
-        url: "/admin/manage",
-        Component: ManageAllUsers
-      },
-
-      {
-        title: "Manage Parcels",
-        url: "/admin/parcels",
-        Component: ManageParecels
-      },
-    ],
-  },
+{
+  title: "Courier Management",
+  items: [
+    {
+      title: "Manage User",
+      url: "/admin/manage",
+      Component: ManageAllUsers,
+      icon: Users,            // 👥 clear for user management
+    },
+    {
+      title: "Manage Parcels",
+      url: "/admin/parcels",
+      Component: ManageParecels,
+      icon: PackageSearch,    // 📦🔍 intuitive for parcel management
+    },
+  ],
+}
   ]
 

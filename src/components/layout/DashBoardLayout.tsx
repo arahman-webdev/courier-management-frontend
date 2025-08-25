@@ -1,5 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar"
-import { Separator } from "@/components/ui/separator"
+
 import {
   SidebarInset,
   SidebarProvider,
@@ -12,12 +12,12 @@ export default function DashboardLayout() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-          <SidebarTrigger className="-ml-1" />
-          <Separator
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-gray-600 px-4">
+          <SidebarTrigger className="-ml-1 text-white" />
+          {/* <Separator
             orientation="vertical"
             className="mr-2 data-[orientation=vertical]:h-4"
-          />
+          /> */}
 
         </header>
         <Outlet />
