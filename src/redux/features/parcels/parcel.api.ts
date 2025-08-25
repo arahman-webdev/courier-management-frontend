@@ -3,22 +3,13 @@ import { baseApi } from "../baseApi";
 
 
 export interface IParcel {
-  trackingId: string
-  parcelType: string
-  weight: number
-  deliveryFee: number
-  deliveryDate: string
-  deliveryAddress: string
-  senderInfo: string
-  receiverInfo: string
-  isConfirmed: boolean
-  isCancelled: boolean
-  isBlocked: boolean
-  status: string
-  _id: string
-  statusLog: any[]
-  createdAt: string
-  updatedAt: string
+  parcelType: string;
+  weight: number;
+  deliveryFee: number;
+  deliveryAddress: string;
+  deliveryDate: Date;
+  senderInfo: string;
+  receiverInfo: string;
 }
 
 interface parcelResponse {
@@ -33,10 +24,10 @@ export const parcelApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // parcel
     createParcel: builder.mutation<parcelResponse, IParcel>({
-      query: (userInfo) => ({
-        url: "/parcels",
+      query: (parcelInfo) => ({
+        url: "/parcel",
         method: "POST",
-        data: userInfo,
+        data: parcelInfo,
       }),
       invalidatesTags: ["PARCEL"], // so user data refreshes
     }),
