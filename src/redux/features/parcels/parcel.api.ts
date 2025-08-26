@@ -29,7 +29,7 @@ export const parcelApi = baseApi.injectEndpoints({
         method: "POST",
         data: parcelInfo,
       }),
-      invalidatesTags: ["PARCEL"], // so user data refreshes
+      invalidatesTags: ["PARCEL"], 
     }),
 
     // cancel parcel ---------
@@ -38,7 +38,16 @@ export const parcelApi = baseApi.injectEndpoints({
         url: `/parcel/cancel/${id}`,
         method: "PATCH",
       }),
-      invalidatesTags: ["PARCEL"], // so user data refreshes
+      invalidatesTags: ["PARCEL"], 
+    }),
+
+    // cancel parcel ---------
+    confirmlParcel: builder.mutation<any, string>({
+      query: (id) => ({
+        url: `/parcel/confirm/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["PARCEL"], 
     }),
 
 
@@ -51,6 +60,7 @@ export const parcelApi = baseApi.injectEndpoints({
       }),
       providesTags: ["PARCEL"]
     }),
+    
     getParcelMe: builder.query({
       query: ()=>({
         url: "/parcel/me",
@@ -63,4 +73,4 @@ export const parcelApi = baseApi.injectEndpoints({
 })
 
 
-export const {useCreateParcelMutation, useGetParcelMeQuery, useCancelParcelMutation} = parcelApi
+export const {useCreateParcelMutation, useGetParcelMeQuery, useCancelParcelMutation, useConfirmlParcelMutation} = parcelApi

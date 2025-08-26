@@ -27,7 +27,6 @@ import { Link, useNavigate } from "react-router";
 import { useLogoutMutation, useMeQuery } from "@/redux/features/auth.api";
 import Logo from "@/assets/icon/Logo";
 import { ProfileOPen } from "./ProfileOpen";
-import { role } from "@/constant/constant";
 import { logout } from "@/redux/features/authSlice";
 import { useDispatch } from "react-redux";
 import { baseApi } from "@/redux/features/baseApi";

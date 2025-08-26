@@ -12,13 +12,14 @@ import { Button } from "@/components/ui/button";
 
 import type { IParcel } from "@/types/parcel";
 import Swal from 'sweetalert2'
+import { Link } from "react-router";
 
 
 const statusColors: Record<string, string> = {
   Requested: "text-blue-500",
   Approved: "text-green-500",
   Dispatched: "text-purple-500",
-  "In Transit": "text-yellow-500",
+  IN_TRANSIT: "text-yellow-500",
   Delivered: "text-green-700",
   Cancelled: "text-red-500",
   Blocked: "text-gray-500",
@@ -56,7 +57,7 @@ const ViewAll = () => {
 
         Swal.fire({
           title: "Cancelled!",
-          text: "Your parcel has been cancelled.",
+          text: "Your parcel has been confirmed.",
           icon: "success",
         });
 
@@ -65,57 +66,84 @@ const ViewAll = () => {
     } catch (error) {
       console.error(error);
 
-      Swal.fire({
-        title: "Error!",
-        text: "Something went wrong while cancelling the parcel.",
-        icon: "error",
-      });
+            Swal.fire({
+                title: "Error!",
+                text: (typeof error === "object" && error !== null && "data" in error && (error as any).data?.message)
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    ? (error as any).data.message
+                    : "An unexpected error occurred.",
+                icon: "error",
+            });
     }
   };
 
   return (
-    <div>
-      <div className="container mx-auto px-5 py-10">
-        <Table>
-          <TableHeader>
-            <TableRow className="hover:bg-transparent border border-gray-800">
-              <TableHead>Parcel Type</TableHead>
-              <TableHead>Delivery Date</TableHead>
-              <TableHead>Location</TableHead>
-              <TableHead>Receiver</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Weight</TableHead>
-              <TableHead className="text-right">Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody className="border border-gray-800">
-            {parcels?.map((parcel: IParcel) => (
-              <TableRow key={parcel._id} className="border-b border-gray-800">
-                <TableCell className="font-medium">{parcel?.parcelType}</TableCell>
-                <TableCell>{parcel.deliveryDate}</TableCell>
-                <TableCell>{parcel.deliveryAddress}</TableCell>
-                <TableCell>{parcel?.receiverInfo?.name}</TableCell>
-                <TableCell className={statusColors[parcel.status] || "text-gray-700"}>{parcel.status}</TableCell>
-                <TableCell className="text-right">{parcel.weight}</TableCell>
-                <TableCell className="text-right">
-                  <Button
-                    size="sm"
-                    className="bg-red-500 text-white px-3 py-1 rounded"
-                    disabled={isCancelling || parcel.status === "Cancelled"}
-                    onClick={() => handleCancelParcel(parcel._id)}> Cancel </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter className="bg-transparent">
-            <TableRow className="hover:bg-transparent">
-              <TableCell colSpan={4}>Total</TableCell>
-              <TableCell className="text-right">$2,500.00</TableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </div>
-    </div>
+<div className="container mx-auto px-5 py-10">
+  <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-700">
+    <Table className="min-w-full">
+      <TableHeader className="bg-gray-800 text-gray-200 ">
+        <TableRow className="border border-gray-800">
+          <TableHead>Parcel Type</TableHead>
+          <TableHead>Delivery Date</TableHead>
+          <TableHead>Location</TableHead>
+          <TableHead>Receiver</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Weight (kg)</TableHead>
+          <TableHead className="text-right">Action</TableHead>
+          <TableHead className="text-right">View</TableHead>
+        </TableRow>
+      </TableHeader>
+
+      <TableBody>
+        {parcels?.map((parcel: IParcel) => (
+          <TableRow
+            key={parcel._id}
+            className="hover:bg-gray-900 transition-colors border-b border-gray-800"
+          >
+            <TableCell className="font-medium">{parcel.parcelType}</TableCell>
+            <TableCell>{new Date(parcel.deliveryDate).toLocaleDateString()}</TableCell>
+            <TableCell>{parcel.deliveryAddress}</TableCell>
+            <TableCell>{parcel.receiverInfo?.name}</TableCell>
+            <TableCell className={`${statusColors[parcel.status] || "text-gray-300"} font-semibold`}>
+              {parcel.status}
+            </TableCell>
+            <TableCell className="text-right">{parcel.weight}</TableCell>
+            <TableCell className="text-right">
+              <Button
+                size="sm"
+                className={`px-3 py-1 rounded font-semibold ${
+                  parcel.status === "Cancelled"
+                    ? "bg-gray-600 cursor-not-allowed"
+                    : "bg-red-500 hover:bg-red-600 text-white"
+                }`}
+                disabled={isCancelling || parcel.status === "Cancelled"}
+                onClick={() => handleCancelParcel(parcel._id)}
+              >
+                Cancel
+              </Button>
+            </TableCell>
+            <TableCell className="text-right">
+              <Button>
+                <Link to={`/sender/view-status-log/${parcel._id}`}>Veiw Status Log</Link>
+              </Button>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+
+      <TableFooter className="bg-gray-800 text-gray-200 font-semibold">
+        <TableRow>
+          <TableCell colSpan={4}>Total</TableCell>
+          <TableCell className="text-right">—</TableCell>
+          <TableCell className="text-right">—</TableCell>
+          <TableCell className="text-right">—</TableCell>
+          <TableCell className="text-right">—</TableCell>
+        </TableRow>
+      </TableFooter>
+    </Table>
+  </div>
+</div>
+
   );
 };
 

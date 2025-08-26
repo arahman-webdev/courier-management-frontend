@@ -9,4 +9,8 @@ export interface IParcel {
     _id: string;
     name: string;
   };
+  senderInfo?: {
+    _id: string;
+    name: string;
+  };
 }

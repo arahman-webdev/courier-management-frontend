@@ -152,8 +152,8 @@ const CreateParcel = () => {
                       <FormItem className="w-full">
                         <FormLabel>Delivery Fee</FormLabel>
                         <FormControl>
-                          <Input placeholder="50" type="number" {...field} value={field.value ?? 50}            value={field.value ?? 50}
-          onChange={(e) => field.onChange(e.target.valueAsNumber)} />
+                          <Input placeholder="50" type="number" {...field} value={field.value ?? 50}
+                            onChange={(e) => field.onChange(e.target.valueAsNumber)} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

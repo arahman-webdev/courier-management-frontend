@@ -59,6 +59,15 @@ export const authApi = baseApi.injectEndpoints({
         data: newUser,
       }),
     }),
+    // block or unblock user
+    blockOrUnblock: builder.mutation<any, { id: string; block: boolean }>({
+      query: ({id, block}) => ({
+        url: `/user/block/${id}`,
+        method: "PATCH",
+        data: { block }
+      }),
+      invalidatesTags: ["USER"],
+    }),
 
     // Get Current User Profile
     me: builder.query({
@@ -99,5 +108,5 @@ export const authApi = baseApi.injectEndpoints({
 
 
 export const {
-  useLoginMutation, useRegisterMutation, useMeQuery, useLogoutMutation, useAllUsersQuery, useAllReceiversQuery
-}  = authApi
+  useLoginMutation, useRegisterMutation, useMeQuery, useLogoutMutation, useAllUsersQuery, useAllReceiversQuery, useBlockOrUnblockMutation
+} = authApi

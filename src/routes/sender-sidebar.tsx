@@ -7,15 +7,16 @@
 import CreateParcel from "@/pages/sender/CreateParcel";
 import Sender from "@/pages/sender/Sender";
 import ViewAll from "@/pages/sender/ViewAll";
+import ViewStatusLog from "@/pages/sender/ViewStatusLog";
 import type { ISidebarItem } from "@/types";
-import { House, Package, PackagePlus, PackageX } from "lucide-react";
-import { lazy } from "react";
+import { House, Package, PackagePlus} from "lucide-react";
+
 // import { lazy } from "react";
 
 // const Analytics = lazy(() => import("@/pages/admin/Analytics"))
 // const AddTour = lazy(() => import("@/pages/admin/AddTour"))
 
-const CancelParcel = lazy(() => import("@/pages/sender/CancelParcel"))
+
 
 export const senderSidebarItems: ISidebarItem[] =
 
@@ -47,6 +48,12 @@ export const senderSidebarItems: ISidebarItem[] =
           title: "View Parcels",
           url: "/sender/view-parcel",
           Component: ViewAll,
+          icon: Package,      
+        },
+        {
+          title: "View Detail",
+          url: "/sender/view-detail",
+          Component: ViewStatusLog,
           icon: Package,      
         },
 

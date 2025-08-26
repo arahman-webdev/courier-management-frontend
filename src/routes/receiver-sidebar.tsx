@@ -1,7 +1,8 @@
 // import AddTour from "@/pages/admin/AddTour";
 // import Analytics from "@/pages/admin/Analytics";
 
-import ConfirmParcels from "@/pages/receiver/ConfirmParcels";
+import ViewDetail from "@/pages/receiver/Detail";
+
 import Receiver from "@/pages/receiver/Receiver";
 import ViewParcels from "@/pages/receiver/ViewParcels";
 import type { ISidebarItem } from "@/types";
@@ -23,15 +24,16 @@ export const receiverSidebarItems: ISidebarItem[] =
           url: "/receiver/analytice",
           Component: Receiver
         },
+
         {
-          title: "Confirm Parcel",
-          url: "/receiver/confirm-parcel",
-          Component: ConfirmParcels
+          title: "View Parcells",
+          url: "/receiver/view-parcels",
+          Component: ViewParcels
         },
         {
           title: "View History",
-          url: "/receiver/view-histroy",
-          Component: ViewParcels
+          url: `/receiver/view-histroy/:id`,
+          Component: ViewDetail
         },
       ],
       

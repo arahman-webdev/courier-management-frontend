@@ -18,6 +18,7 @@ import { role } from "@/constant/constant";
 import type { TRole } from "@/types";
 import PublicRoute from "./PublicRoute";
 import { senderSidebarItems } from "./sender-sidebar";
+import ViewStatusLog from "@/pages/sender/ViewStatusLog";
 
 const router = createBrowserRouter([
     {
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
         )
     },
 
+    {
+        path: '/sender/view-status-log/:id',
+        Component: withAuth(ViewStatusLog, role.sender as TRole)
+    },
     {
         path: '/unauthorized',
         Component: Unauthorized
