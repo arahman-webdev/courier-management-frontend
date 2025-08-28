@@ -132,7 +132,7 @@ export function LoginForm({
                             />
                             <Button
                                 type="submit"
-                                className="w-full bg-[#373DD2] text-white font-semibold rounded-full py-2 text-base"
+                                className="w-full bg-[#373DD2] hover:bg-[#373cd2de] text-white font-semibold rounded-full py-2 text-base"
                             >
                                 LOG IN
                             </Button>
@@ -165,15 +165,6 @@ export function LoginForm({
                         </svg>
                         LOG IN WITH GOOGLE
                     </Button>
-
-                    <div className="flex justify-between items-center mt-4 mb-2">
-                        <Link
-                            to="/forgot-password"
-                            className="text-sm text-[#373DD2] hover:underline font-medium"
-                        >
-                            Forgot your password?
-                        </Link>
-                    </div>
                     <div className="text-center text-sm mt-2">
                         New here?{" "}
                         <Link

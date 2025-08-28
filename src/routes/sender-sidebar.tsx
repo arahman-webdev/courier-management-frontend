@@ -1,18 +1,14 @@
-// import AddTour from "@/pages/admin/AddTour";
-// import Analytics from "@/pages/admin/Analytics";
 
 
-
-
-import CreateParcel from "@/pages/sender/CreateParcel";
-import ViewAll from "@/pages/sender/ViewAll";
 import type { ISidebarItem } from "@/types";
-import { House, Package, PackagePlus} from "lucide-react";
+import { Package, PackagePlus} from "lucide-react";
+import { lazy } from "react";
 
 // import { lazy } from "react";
 
-// const Analytics = lazy(() => import("@/pages/admin/Analytics"))
-// const AddTour = lazy(() => import("@/pages/admin/AddTour"))
+const CreateParcel = lazy(() => import("@/pages/sender/CreateParcel"))
+const ViewAll = lazy(() => import("@/pages/sender/ViewAll"))
+
 
 
 
@@ -21,14 +17,8 @@ export const senderSidebarItems: ISidebarItem[] =
   [
     {
       title: "Dashboard",
-      icon: House,
       items: [
-        {
-          title: "HOME",
-          icon: House,
-          url: "/sender/analytic",
-          Component: CreateParcel
-        },
+
       ],
 
     },

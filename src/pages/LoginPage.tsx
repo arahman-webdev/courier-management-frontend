@@ -4,7 +4,7 @@ import loginImg from "../assets/images/loginImg.jpg"
 
 const LoginPage = () => {
     return (
-        <div className="relative min-h-screen w-full flex items-center justify-center  bg-cover bg-no-repeat bg-center" 
+        <div className="relative min-h-screen w-full flex items-center justify-center  bg-cover bg-no-repeat bg-center px-6" 
         style={{
             background: `url(${loginImg})`,
             backgroundSize: "cover",

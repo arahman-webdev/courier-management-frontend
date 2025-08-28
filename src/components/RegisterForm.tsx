@@ -18,11 +18,12 @@ import {
 import { FormDescription, FormField, FormMessage, FormItem, FormLabel, FormControl, Form } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
 import Password from "./layout/Password"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import { useRegisterMutation } from "@/redux/features/auth.api"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
+import config from "@/config"
 
 
 const formSchema = z.object({
@@ -45,6 +46,7 @@ export function RegisterForm({
     ...props
 }: React.ComponentProps<"div">) {
 
+    const navigate = useNavigate()
 
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -60,13 +62,15 @@ export function RegisterForm({
 
     const [registerUser] = useRegisterMutation()
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
-        console.log(data)
+        
         try {
             const userData = { ...data, Available: true };
 
             const response = await registerUser(userData).unwrap();
             console.log(response);
             toast.success("Successfully created user");
+            navigate("/login")
+
         } catch (error: any) {
             console.log(error);
 
@@ -181,7 +185,7 @@ export function RegisterForm({
                                
                                 <Button
                                     type="submit"
-                                    className="w-full bg-[#373DD2] text-white font-semibold rounded-full py-2 text-base"
+                                    className="w-full bg-[#373DD2] hover:bg-[#373cd2e0] text-white font-semibold rounded-full py-2 text-base"
                                 >
                                     SIGN UP
                                 </Button>
@@ -201,25 +205,25 @@ export function RegisterForm({
                         </span>
                     </div>
                     <div className="">
-                        <Button
-                            variant="outline"
-                            type="button"
-                            className="w-full flex items-center justify-center gap-2 font-semibold rounded-full py-2"
-                        // onClick={() => window.open(`${config.baseUrl}/auth/google`)}
+                    <Button
+                        variant="outline"
+                        type="button"
+                        className="w-full flex items-center justify-center gap-2 font-semibold rounded-full py-2"
+                        onClick={() => window.open(`${config.baseUrl}/auth/google`)}
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    d="M21.805 10.023h-9.785v3.978h5.676c-.245 1.273-1.478 3.743-5.676 3.743-3.417 0-6.193-2.828-6.193-6.317s2.776-6.317 6.193-6.317c1.949 0 3.26.828 4.012 1.545l2.741-2.662c-1.736-1.613-3.984-2.606-6.753-2.606-5.388 0-9.765 4.372-9.765 9.76s4.377 9.76 9.765 9.76c5.627 0 9.354-3.966 9.354-9.56 0-.642-.073-1.134-.162-1.599z"
-                                    fill="#EA4335"
-                                />
-                            </svg>
-                            LOG IN WITH GOOGLE
-                        </Button>
+                            <path
+                                d="M21.805 10.023h-9.785v3.978h5.676c-.245 1.273-1.478 3.743-5.676 3.743-3.417 0-6.193-2.828-6.193-6.317s2.776-6.317 6.193-6.317c1.949 0 3.26.828 4.012 1.545l2.741-2.662c-1.736-1.613-3.984-2.606-6.753-2.606-5.388 0-9.765 4.372-9.765 9.76s4.377 9.76 9.765 9.76c5.627 0 9.354-3.966 9.354-9.56 0-.642-.073-1.134-.162-1.599z"
+                                fill="#EA4335"
+                            />
+                        </svg>
+                        LOG IN WITH GOOGLE
+                    </Button>
                     </div>
                 </CardContent>
             </Card>

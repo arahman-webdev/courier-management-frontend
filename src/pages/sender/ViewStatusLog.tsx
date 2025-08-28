@@ -4,8 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Link, useParams } from "react-router";
-import { useConfirmlParcelMutation, useGetParcelMeQuery } from "@/redux/features/parcels/parcel.api";
-import Swal from "sweetalert2";
+import {  useGetParcelMeQuery } from "@/redux/features/parcels/parcel.api";
+
 
 const statusColors: Record<string, string> = {
   Requested: "text-blue-500",
@@ -22,7 +22,7 @@ const statusColors: Record<string, string> = {
 const ViewStatusLog = () => {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading, error } = useGetParcelMeQuery(undefined);
-  const [confirmParcel, { isLoading: isConfirming }] = useConfirmlParcelMutation();
+
 
   if (isLoading) {
     return <p>Loading...</p>;

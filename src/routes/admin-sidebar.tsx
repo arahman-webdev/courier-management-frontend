@@ -1,15 +1,15 @@
 // import AddTour from "@/pages/admin/AddTour";
 // import Analytics from "@/pages/admin/Analytics";
 
-import Admin from "@/pages/admin/Admin";
-import ManageAllUsers from "@/pages/admin/ManageAllUsers";
-import ManageParecels from "@/pages/admin/ManageParecels";
 import type { ISidebarItem } from "@/types";
 import { LayoutDashboard, PackageSearch, Users } from "lucide-react";
+import { lazy } from "react";
 // import { lazy } from "react";
 
-// const Analytics = lazy(() => import("@/pages/admin/Analytics"))
-// const AddTour = lazy(() => import("@/pages/admin/AddTour"))
+const Admin = lazy(() => import("@/pages/admin/Admin"))
+const ManageAllUsers = lazy(() => import("@/pages/admin/ManageAllUsers"))
+const ManageParecels = lazy(() => import("@/pages/admin/ManageParecels"))
+
 
 
 

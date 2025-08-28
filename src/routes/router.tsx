@@ -1,28 +1,33 @@
 import App from "@/App";
 import DashboardLayout from "@/components/layout/DashBoardLayout";
-import About from "@/pages/About";
-import Contact from "@/pages/Contact";
-import FaqPage from "@/pages/Faq";
-import Faq from "@/pages/Faq";
-import Features from "@/pages/Features";
-import Home from "@/pages/Home";
 import { generateRoutes } from "@/utills/generateRoutes";
 import { createBrowserRouter, Navigate } from "react-router";
 import { adminSidebarItems } from "./admin-sidebar";
-import LoginPage from "@/pages/LoginPage";
-import Register from "@/pages/Register";
 import { receiverSidebarItems } from "./receiver-sidebar";
-import Unauthorized from "@/pages/Unauthorized";
 import { withAuth } from "@/utills/withAuth";
 import { role } from "@/constant/constant";
 import type { TRole } from "@/types";
 import PublicRoute from "./PublicRoute";
 import { senderSidebarItems } from "./sender-sidebar";
-
 import ParcelDetails from "@/pages/admin/ParcelDetails";
-import ParcelTracking from "@/pages/tracking/ParcelTracking";
 import ViewStatusLog from "@/pages/sender/ViewStatusLog";
 import ViewDetail from "@/pages/receiver/Detail";
+
+// const Analytics = lazy(() => import("@/pages/admin/Analytics"))
+// const AddTour = lazy(() => import("@/pages/admin/AddTour"))
+
+import { lazy } from "react";
+
+const Home = lazy(()=> import("@/pages/Home"))
+const About = lazy(()=> import("@/pages/About"))
+const FaqPage = lazy(()=> import("@/pages/Faq"))
+const Features = lazy(()=> import("@/pages/Features"))
+const Contact = lazy(()=> import("@/pages/Contact"))
+const LoginPage = lazy(()=> import("@/pages/LoginPage"))
+const Register = lazy(()=> import("@/pages/Register"))
+const Unauthorized = lazy(()=> import("@/pages/Unauthorized"))
+const ParcelTracking = lazy(()=> import("@/pages/tracking/ParcelTracking"))
+
 
 const router = createBrowserRouter([
     {
@@ -37,10 +42,7 @@ const router = createBrowserRouter([
                 path: '/about',
                 Component: About
             },
-            {
-                path: '/faq',
-                Component: Faq
-            },
+
             {
                 path: '/features',
                 Component: Features
@@ -78,6 +80,7 @@ const router = createBrowserRouter([
         Component: withAuth(DashboardLayout, role.receiver as TRole),
         path: "/receiver",
         children: [
+             { index: true, element: <Navigate to='/receiver/view-parcels' /> },
             ...generateRoutes(receiverSidebarItems),
             {
                 path: "/receiver/view-histroy/:id",
@@ -89,6 +92,7 @@ const router = createBrowserRouter([
         Component: withAuth(DashboardLayout, role.sender as TRole),
         path: "/sender",
         children: [
+            { index: true, element: <Navigate to='/sender/create-parcel' /> },
             ...generateRoutes(senderSidebarItems),
             {
                  path: '/sender/view-status-log/:id',

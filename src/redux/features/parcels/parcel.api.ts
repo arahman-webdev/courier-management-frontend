@@ -1,3 +1,4 @@
+import type { ParcelQueryParams, ParcelResponse } from "@/types/parcel";
 import { baseApi } from "../baseApi";
 
 
@@ -26,7 +27,7 @@ export const parcelApi = baseApi.injectEndpoints({
     // --------------------------------------------------
 
     // ✅ Get all parcels
-    getAllParcels: builder.query<any, Record<string, string> | void>({
+    getAllParcels: builder.query<ParcelResponse, ParcelQueryParams | void>({
       query: (query) => {
         const params = new URLSearchParams(query || {}).toString();
         return {
@@ -36,6 +37,27 @@ export const parcelApi = baseApi.injectEndpoints({
       },
       providesTags: ["PARCEL"],
     }),
+
+
+//     getAllParcels: builder.query<ParcelResponse, ParcelQueryParams | void>({
+//   query: (query) => {
+//     const params: Record<string, string> = {};
+
+//     if (query?.parcelType) params.parcelType = query.parcelType;
+//     if (query?.deliveryDate) params.deliveryDate = query.deliveryDate;
+
+//     // always include pagination
+//     if (query?.page) params.page = String(query.page);
+//     if (query?.limit) params.limit = String(query.limit);
+
+//     return {
+//       url: "/parcel",
+//       method: "GET",
+//       params, // ✅ let fetchBaseQuery serialize
+//     };
+//   },
+//   providesTags: ["PARCEL"],
+// }),
 
     // Get a user's parcels
     getParcelMe: builder.query({
@@ -63,6 +85,9 @@ export const parcelApi = baseApi.injectEndpoints({
       }),
       providesTags: ["PARCEL"],
     }),
+
+
+
 
     // Mutations
     // --------------------------------------------------

@@ -4,7 +4,7 @@ import registerImg from "../assets/images/register.png"
 const Register = () => {
     return (
         <>
-            <div className="relative min-h-screen w-full flex items-center justify-center  bg-cover  bg-center" 
+            <div className="relative min-h-screen w-full flex items-center justify-center  bg-cover  bg-center px-6" 
             style={{ 
                 background: `url(${registerImg})`,
                 backgroundSize: "cover",
