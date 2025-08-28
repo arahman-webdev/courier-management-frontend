@@ -1,14 +1,11 @@
 # SwiftParcel - Parcel Delivery System
-
-Live Demo==> https://swiftparcelbd.netlify.app/
+Live Demo: https://swiftparcelbd.netlify.app/
 
 ---
 
 ## Project Overview
 
-SwiftParcel is a secure, role-based parcel delivery system that enables users to send and receive parcels efficiently. The system supports multiple user roles including **Sender**, **Receiver**, and **Admin**, each with tailored functionalities. Admins can manage parcels, confirm deliveries, update statuses, and block/unblock parcels, while users can track and manage their parcels.  
-
-The system aims to provide a seamless, reliable, and user-friendly experience for managing parcel deliveries in real-time.
+SwiftParcel is a secure, role-based parcel delivery system designed to streamline the shipping process for both senders and receivers. Admins have comprehensive control, managing parcels, updating statuses, and ensuring smooth operations, while users can efficiently track and manage their deliveries in real-time. This system prioritizes a seamless, reliable, and user-friendly experience, with tailored functionalities for each user role: Sender, Receiver, and Admin.
 
 ---
 
@@ -40,6 +37,29 @@ The system aims to provide a seamless, reliable, and user-friendly experience fo
 - JWT Authentication  
 - Role-based access control  
 
+
+# Getting Started
+To explore the live demo, use the provided credentials to log in as an Admin, Sender, or Receiver.
+
+# Credentials
+Admin:
+
+Email: admin@email.com
+
+Password: admin_password
+
+Sender:
+
+Email: sender@gmail.com
+
+Password: 123456A2a$
+
+Receiver:
+
+Email: receiver@gmail.com
+
+Password: 123456A2a$
+
 **Deployment:**  
 - Netlify: https://swiftparcelbd.netlify.app/ 
 
@@ -55,6 +75,8 @@ Senders can create parcels and track their deliveries
 
 Receivers can view incoming parcels and confirm receipt
 
+
+
 ## Setup Instructions
 
 ### Prerequisites
@@ -64,6 +86,8 @@ Receivers can view incoming parcels and confirm receipt
 ### Clone the repository
 ```bash
 git clone https://github.com/arahman-webdev/courier-management-frontend.git
+
+cd courier-management-frontend
 
 
 # Install dependencies
