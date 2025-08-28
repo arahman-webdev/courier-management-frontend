@@ -30,11 +30,7 @@ export const receiverSidebarItems: ISidebarItem[] =
           url: "/receiver/view-parcels",
           Component: ViewParcels
         },
-        {
-          title: "View History",
-          url: `/receiver/view-histroy/:id`,
-          Component: ViewDetail
-        },
+
       ],
       
     },

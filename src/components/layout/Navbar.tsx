@@ -58,7 +58,8 @@ export function Navbar({
     { title: "Features", url: "/features" },
     { title: "Faq", url: "/faq" },
     { title: "Contact Us", url: "/contact" },
-    { title: "Dashboard", url: "/admin" },
+    { title: "Track Parcel", url: "/tracking" },
+
   ],
   auth = {
     login: { title: "Login", url: "/login" },

@@ -1,27 +1,54 @@
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { useAllUsersQuery, useBlockOrUnblockMutation } from "@/redux/features/auth.api";
+import Swal from "sweetalert2";
 
 const ManageAllUsers = () => {
   const { data } = useAllUsersQuery(undefined);
   const [blockOrUnblock, { isLoading: isBlocking }] = useBlockOrUnblockMutation();
 
-  const users = data?.data?.filter((user)=> user.email !== "admin@email.com")
+  // exclude main admin
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const users = data?.data?.filter((user:any) => user.email !== "admin@email.com");
 
-  console.log(users)
-
-  // toggle block/unblock
+  // toggle block/unblock with confirmation
   const handleToggleBlock = async (userId: string, status: string) => {
-    try {
-      const isBlocked = status === "BLOCKED";
-      await blockOrUnblock({ id: userId, block: !isBlocked }).unwrap();
-    } catch (err) {
-      console.error("Failed to update user:", err);
+    const isBlocked = status === "BLOCKED";
+
+    const result = await Swal.fire({
+      title: isBlocked ? "Unblock User?" : "Block User?",
+      text: `Are you sure you want to ${isBlocked ? "unblock" : "block"} this user?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: isBlocked ? "#16a34a" : "#dc2626", // green or red
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: isBlocked ? "Yes, Unblock!" : "Yes, Block!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await blockOrUnblock({ id: userId, block: !isBlocked }).unwrap();
+        Swal.fire({
+          icon: "success",
+          title: `User ${isBlocked ? "unblocked" : "blocked"} successfully!`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Action Failed",
+          text: "Something went wrong. Please try again.",
+        });
+      }
     }
   };
 
   return (
     <div className="container mx-auto px-5 py-10">
+      {/* Title */}
+      <h1 className="text-2xl font-bold text-gray-100 mb-6">👥 Manage Users</h1>
+
       <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-700">
         <Table className="min-w-full">
           <TableHeader className="bg-gray-800 text-gray-200">
@@ -74,11 +101,12 @@ const ManageAllUsers = () => {
             <TableRow>
               <TableCell colSpan={4}>Total Users</TableCell>
               <TableCell className="text-right">
-                {data?.data?.length || 0}
+                {users?.length || 0}
               </TableCell>
             </TableRow>
           </TableFooter>
         </Table>
+        
       </div>
     </div>
   );

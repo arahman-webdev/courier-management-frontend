@@ -85,7 +85,9 @@ export const authApi = baseApi.injectEndpoints({
       }),
       providesTags: ["USER"],
     }),
-    // Get All Users
+
+
+    // Get All receivers
     allReceivers: builder.query({
       query: () => ({
         url: "/user/receivers",

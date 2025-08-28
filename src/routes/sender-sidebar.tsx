@@ -5,9 +5,7 @@
 
 
 import CreateParcel from "@/pages/sender/CreateParcel";
-import Sender from "@/pages/sender/Sender";
 import ViewAll from "@/pages/sender/ViewAll";
-import ViewStatusLog from "@/pages/sender/ViewStatusLog";
 import type { ISidebarItem } from "@/types";
 import { House, Package, PackagePlus} from "lucide-react";
 
@@ -29,7 +27,7 @@ export const senderSidebarItems: ISidebarItem[] =
           title: "HOME",
           icon: House,
           url: "/sender/analytic",
-          Component: Sender
+          Component: CreateParcel
         },
       ],
 
@@ -50,12 +48,7 @@ export const senderSidebarItems: ISidebarItem[] =
           Component: ViewAll,
           icon: Package,      
         },
-        {
-          title: "View Detail",
-          url: "/sender/view-detail",
-          Component: ViewStatusLog,
-          icon: Package,      
-        },
+
 
       ]
     },

@@ -4,7 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useParams } from "react-router";
-import { useGetParcelMeQuery } from "@/redux/features/parcels/parcel.api";
+import { useConfirmlParcelMutation, useGetParcelMeQuery } from "@/redux/features/parcels/parcel.api";
+import Swal from "sweetalert2";
 
 const statusColors: Record<string, string> = {
   Requested: "text-blue-500",
@@ -20,7 +21,8 @@ const statusColors: Record<string, string> = {
 
 const ViewDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const { data, isLoading, error } = useGetParcelMeQuery(undefined); // fetch all parcels
+  const { data, isLoading, error } = useGetParcelMeQuery(undefined); 
+    const [confirmParcel, { isLoading: isConfirming }] = useConfirmlParcelMutation();
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -47,69 +49,122 @@ const ViewDetail = () => {
     );
   }
 
-console.log(id)
+  console.log(id)
 
-//   const parcel = data?.data;
+  //   const parcel = data?.data;
 
   if (!parcel) {
     return <p className="text-center text-red-500">Parcel not found</p>;
   }
 
+        const handleConfirmParcel = async (id: string) => {
+            try {
+                const result = await Swal.fire({
+                    title: "Confirm Delivery?",
+                    text: "Once confirmed, the parcel will be marked as delivered.",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, confirm it!",
+                });
+    
+                if (result.isConfirmed) {
+                    const res = await confirmParcel(id).unwrap();
+    
+                    Swal.fire({
+                        title: "Confirmed!",
+                        text: "The parcel has been delivered successfully.",
+                        icon: "success",
+                    });
+    
+                    console.log("confirm response", res);
+                }
+            } catch (error) {
+                console.error(error);
+    
+                Swal.fire({
+                    title: "Error!",
+                    text:
+                        typeof error === "object" &&
+                        error !== null &&
+                        "data" in error &&
+                        (error as any).data?.message
+                            ? (error as any).data.message
+                            : "An unexpected error occurred.",
+                    icon: "error",
+                });
+            }
+        };
+
   return (
-    <div className="container mx-auto px-5 py-10">
-      {/* Header */}
-      <h1 className="text-2xl font-bold mb-6">📦 Parcel Details</h1>
+    <div className="bg-gray-900">
+      <div className="container mx-auto px-5 py-10 text-gray-100  min-h-screen">
+        {/* Header */}
+        <h1 className="text-2xl font-bold mb-6">📦 Parcel Details</h1>
 
-      {/* Parcel Info */}
-      <Card className="mb-8 shadow-lg">
-        <CardContent className="grid md:grid-cols-2 gap-6 p-6">
-          <div>
-            <p><span className="font-semibold">Parcel Type:</span> {parcel.parcelType}</p>
-            <p><span className="font-semibold">Weight:</span> {parcel.weight} kg</p>
-            <p><span className="font-semibold">Delivery Date:</span> {parcel.deliveryDate}</p>
-            <p><span className="font-semibold">Status:</span> 
-              <span className={`ml-2 font-semibold ${statusColors[parcel.status] || "text-gray-700"}`}>
-                {parcel.status}
-              </span>
-            </p>
-          </div>
-          <div>
-            <p><span className="font-semibold">Receiver:</span> {parcel.receiverInfo?.name}</p>
-            <p><span className="font-semibold">Phone:</span> {parcel.receiverInfo?.phone}</p>
-            <p><span className="font-semibold">Address:</span> {parcel.deliveryAddress}</p>
-          </div>
-        </CardContent>
-      </Card>
+        {/* Parcel Info */}
+        <Card className="mb-8 shadow-lg bg-gray-800 text-gray-100 border border-gray-700">
+          <CardContent className="grid md:grid-cols-2 gap-6 p-6">
+            <div>
+              <p><span className="font-semibold">Parcel Type:</span> {parcel.parcelType}</p>
+              <p><span className="font-semibold">Weight:</span> {parcel.weight} kg</p>
+              <p><span className="font-semibold">Delivery Date:</span> {parcel.deliveryDate}</p>
+              <p>
+                <span className="font-semibold">Status:</span>
+                <span className={`ml-2 font-semibold ${statusColors[parcel.status] || "text-gray-300"}`}>
+                  {parcel.status}
+                </span>
+              </p>
+            </div>
+            <div>
+              <p><span className="font-semibold">Sender:</span> {parcel.senderInfo?.name}</p>
+              <p><span className="font-semibold">Phone:</span> {parcel.receiverInfo?.phone}</p>
+              <p><span className="font-semibold">Address:</span> {parcel.deliveryAddress}</p>
+            </div>
+          </CardContent>
+        </Card>
 
-      {/* Delivery History */}
-      <Card className="shadow-lg">
-        <CardContent className="p-6">
-          <h2 className="text-lg font-semibold mb-4">📜 Delivery History</h2>
-          <div className="relative border-l border-gray-300 pl-6 space-y-6">
-            {parcel.statusLog?.map((log: any, idx: number) => (
-              <div key={idx} className="relative">
-                {/* Dot */}
-                <span className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-500 border-2 border-white"></span>
-                <p className={`font-semibold ${statusColors[log.status] || "text-gray-700"}`}>
-                  {log.status}
-                </p>
-                <p className="text-sm text-gray-600">{new Date(log.timestamp).toLocaleString()}</p>
-                {log.note && <p className="text-sm text-gray-500 italic">Note: {log.note}</p>}
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+        {/* Delivery History */}
+        <Card className="shadow-lg bg-gray-800 text-gray-100 border border-gray-700">
+          <CardContent className="p-6">
+            <h2 className="text-lg font-semibold mb-4">📜 Delivery History</h2>
+            <div className="relative border-l border-gray-600 pl-6 space-y-6">
+              {parcel.statusLog?.map((log: any, idx: number) => (
+                <div key={idx} className="relative">
+                  {/* Dot */}
+                  <span className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-500 border-2 border-gray-900"></span>
+                  <p className={`font-semibold ${statusColors[log.status] || "text-gray-300"}`}>
+                    {log.status}
+                  </p>
+                  <p className="text-sm text-gray-400">
+                    {new Date(log.timestamp).toLocaleString()}
+                  </p>
+                  {log.note && (
+                    <p className="text-sm text-gray-500 italic">Note: {log.note}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
-      {/* Action Buttons */}
-      <div className="mt-6 flex gap-3">
-        <Button className="bg-blue-500 text-white">Back to Parcels</Button>
-        {parcel.status === "In Transit" && (
-          <Button className="bg-green-500 text-white">Confirm Delivery</Button>
-        )}
+        {/* Action Buttons */}
+        <div className="mt-6 flex gap-3">
+          <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+            Back to Parcels
+          </Button>
+          {parcel.status === "In Transit" && (
+            <Button
+              disabled={isConfirming || parcel.status !== "In Transit"}
+              onClick={() => handleConfirmParcel(parcel._id)}
+              className="bg-green-600 hover:bg-green-700 text-white">
+              Confirm Delivery
+            </Button>
+          )}
+        </div>
       </div>
     </div>
-
   );
 };
 

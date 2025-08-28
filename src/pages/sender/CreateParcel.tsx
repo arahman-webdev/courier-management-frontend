@@ -88,198 +88,208 @@ const CreateParcel = () => {
   return (
     <div className="container mx-auto px-6 py-10">
       <div className="max-w-5xl mx-auto">
-        <Card>
-          <CardHeader>
-            <CardTitle>Create Parcel</CardTitle>
-            <CardDescription>
-              Fill in the details to create a new parcel request
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="w-full space-y-6"
-              >
-                {/* Parcel Type + Weight */}
-                <div className="md:flex gap-4 w-full space-y-4 md:space-y-0">
-                  <FormField
-                    control={form.control}
-                    name="parcelType"
-                    render={({ field }) => (
-                      <FormItem className="w-full">
-                        <FormLabel>Parcel Type</FormLabel>
+    <Card className="bg-gray-800 text-gray-100 border border-gray-700 shadow-lg">
+      <CardHeader>
+        <CardTitle>Create Parcel</CardTitle>
+        <CardDescription className="text-gray-400">
+          Fill in the details to create a new parcel request
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full space-y-6"
+          >
+            {/* Parcel Type + Weight */}
+            <div className="md:flex gap-4 w-full space-y-4 md:space-y-0">
+              <FormField
+                control={form.control}
+                name="parcelType"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Parcel Type</FormLabel>
+                    <FormControl>
+                      <Input
+                        className="bg-gray-700 text-gray-100 border border-gray-600"
+                        placeholder="Books, Electronics, Clothes..."
+                        type="text"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="weight"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Weight (kg)</FormLabel>
+                    <FormControl>
+                      <Input
+                        className="bg-gray-700 text-gray-100 border border-gray-600"
+                        placeholder="1.0"
+                        type="number"
+                        step="0.1"
+                        {...field}
+                        value={field.value ?? 0}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* Delivery Fee + Date */}
+            <div className="md:flex gap-4 w-full space-y-4 md:space-y-0">
+              <FormField
+                control={form.control}
+                name="deliveryFee"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Delivery Fee</FormLabel>
+                    <FormControl>
+                      <Input
+                        className="bg-gray-700 text-gray-100 border border-gray-600"
+                        placeholder="50"
+                        type="number"
+                        {...field}
+                        value={field.value ?? 50}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="deliveryDate"
+                render={({ field }) => (
+                  <FormItem className="w-full flex flex-col">
+                    <FormLabel>Delivery Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
                         <FormControl>
-                          <Input
-                            placeholder="Books, Electronics, Clothes..."
-                            type="text"
-                            {...field}
-                          />
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-full pl-3 text-left font-normal bg-gray-700 text-gray-100 border border-gray-600",
+                              !field.value && "text-gray-400"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
                         </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="weight"
-                    render={({ field }) => (
-                      <FormItem className="w-full">
-                        <FormLabel>Weight (kg)</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="1.0"
-                            type="number"
-                            step="0.1"
-                            {...field}
-                            value={field.value ?? 0}
-                            onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                {/* Delivery Fee + Date */}
-                <div className="md:flex gap-4 w-full space-y-4 md:space-y-0">
-                  <FormField
-                    control={form.control}
-                    name="deliveryFee"
-                    render={({ field }) => (
-                      <FormItem className="w-full">
-                        <FormLabel>Delivery Fee</FormLabel>
-                        <FormControl>
-                          <Input placeholder="50" type="number" {...field} value={field.value ?? 50}
-                            onChange={(e) => field.onChange(e.target.valueAsNumber)} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="deliveryDate"
-                    render={({ field }) => (
-                      <FormItem className="w-full flex flex-col">
-                        <FormLabel>Delivery Date</FormLabel>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <FormControl>
-                              <Button
-                                variant="outline"
-                                className={cn(
-                                  "w-full pl-3 text-left font-normal",
-                                  !field.value && "text-muted-foreground"
-                                )}
-                              >
-                                {field.value ? (
-                                  format(field.value, "PPP")
-                                ) : (
-                                  <span>Pick a date</span>
-                                )}
-                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                              </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={field.value}
-                              onSelect={field.onChange}
-                              disabled={(date) =>
-                                date < new Date(new Date().setDate(new Date().getDate() - 1))
-                              }
-                              captionLayout="dropdown"
-                            />
-                          </PopoverContent>
-                        </Popover>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                {/* Delivery Address */}
-                <FormField
-                  control={form.control}
-                  name="deliveryAddress"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Delivery Address</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Chattogram University, Chattogram"
-                          type="text"
-                          {...field}
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0 bg-gray-800 border border-gray-700" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date < new Date(new Date().setDate(new Date().getDate() - 1))
+                          }
+                          captionLayout="dropdown"
+                          className="bg-gray-800 text-gray-100"
                         />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-                {/* Sender (Auto-filled) */}
-                <FormField
-                  control={form.control}
-                  name="senderInfo"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Sender ID</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          readOnly
+            {/* Delivery Address */}
+            <FormField
+              control={form.control}
+              name="deliveryAddress"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Delivery Address</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="bg-gray-700 text-gray-100 border border-gray-600"
+                      placeholder="Chattogram University, Chattogram"
+                      type="text"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            {/* Sender (Auto-filled) */}
+            <FormField
+              control={form.control}
+              name="senderInfo"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Sender ID</FormLabel>
+                  <FormControl>
+                    <Input
+                      className="bg-gray-700 text-gray-100 border border-gray-600"
+                      type="text"
+                      readOnly
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                {/* Receiver Select */}
-                <FormField
-                  control={form.control}
-                  name="receiverInfo"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Receiver</FormLabel>
-                      <FormControl>
-                        <select
-                          {...field}
-                          className="w-full border rounded px-3 py-2 text-white bg-[#080C23]"
-                        >
-                          <option value="">Select a Receiver</option>
-                          {!isLoading &&
-                            receivers?.data?.map((r: { _id: string, name: string, email: string }) => (
-                              <option key={r._id} value={r._id}>
-                                {r.name} ({r.email})
-                              </option>
-                            ))}
-                        </select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            {/* Receiver Select */}
+            <FormField
+              control={form.control}
+              name="receiverInfo"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Receiver</FormLabel>
+                  <FormControl>
+                    <select
+                      {...field}
+                      className="w-full border border-gray-600 rounded px-3 py-2 bg-gray-700 text-gray-100"
+                    >
+                      <option value="">Select a Receiver</option>
+                      {!isLoading &&
+                        receivers?.data?.map((r: { _id: string; name: string; email: string }) => (
+                          <option key={r._id} value={r._id}>
+                            {r.name} ({r.email})
+                          </option>
+                        ))}
+                    </select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                {/* Submit */}
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-[#172572] text-white font-semibold rounded-full py-2 text-base"
-                >
-                  {isSubmitting ? "Creating..." : "Create Parcel"}
-                </Button>
-              </form>
-            </Form>
-          </CardContent>
-        </Card>
+            {/* Submit */}
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-[#172572] text-white font-semibold rounded-full py-2 text-base hover:bg-[#1e2c85]"
+            >
+              {isSubmitting ? "Creating..." : "Create Parcel"}
+            </Button>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
       </div>
     </div>
   );
